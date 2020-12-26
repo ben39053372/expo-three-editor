@@ -3,6 +3,7 @@ import EditorCamera from "../Editor/EditorCamera"
 import EditorRenderer from "../Editor/EditorRenderer"
 import EditorScene from "../Editor/EditorScene"
 
+import eventManager from "../EventManager"
 class WebGl {
   width = 0
   height = 0
@@ -13,11 +14,14 @@ class WebGl {
 
   onWindowResize(width: number, height: number, scale: number) {
     if (this.camera === undefined) return
-    console.log("resize")
+    // console.log("resize")
 
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(width * scale, height * scale, false)
+    // this.camera.addEventListener("resize", (e) => {
+    //   console.log("camera event: resize!", e)
+    // })
   }
 
   onGLContextCreate(gl: ExpoWebGLRenderingContext) {
@@ -30,6 +34,9 @@ class WebGl {
     )
     this.camera = camera
     this.camera.init()
+    eventManager.addListener("test", () => {
+      console.log("testing2")
+    })
     const renderer = new EditorRenderer({
       gl,
       antialias: true

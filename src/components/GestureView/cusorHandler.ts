@@ -1,5 +1,6 @@
 import { THREE } from "expo-three"
 import WebGL from "../../Canvas/WebGL"
+import eventManager from "../../EventManager"
 
 const cursorHandler = (webGL: WebGL) => {
   const raycaster = new THREE.Raycaster()
@@ -15,7 +16,8 @@ const cursorHandler = (webGL: WebGL) => {
       raycaster.setFromCamera(mouse, webGL.camera)
 
       const plane = webGL.scene?.getObjectByName("plane")
-      const cursor = webGL.scene.getObjectByName("cursor")
+      const cursor = webGL.scene?.getObjectByName("cursor")
+      eventManager.send({ type: "test", payload: {} })
 
       if (plane && cursor) {
         const intersects = raycaster.intersectObject(plane)

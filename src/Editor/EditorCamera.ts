@@ -1,4 +1,5 @@
 import { THREE } from "expo-three"
+import EventManager from "../EventManager"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
@@ -15,6 +16,9 @@ class camera extends THREE.PerspectiveCamera {
   init() {
     this.position.set(0, 20, 20)
     this.lookAt(0, 0, 0)
+    EventManager.addListener("test", (e) => {
+      console.log("camera got the event", e)
+    })
   }
 
   setPosition(x: number, y: number, z: number) {
