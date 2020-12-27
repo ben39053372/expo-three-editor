@@ -6,7 +6,7 @@ import {
   View,
   ViewProps
 } from "react-native"
-import WebGl from "../../Canvas/WebGL"
+import WebGl from "@Canvas/WebGL"
 import oneFingerHandler from "./OneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
 
@@ -31,7 +31,7 @@ const GestureView = (props: props) => {
 
       // on start
       onPanResponderGrant: (evt, gestureState) => {
-        isPan = false
+        // isPan = false
         evt.preventDefault()
       },
       // on Move

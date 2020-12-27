@@ -3,7 +3,7 @@ import EditorCamera from "../Editor/EditorCamera"
 import EditorRenderer from "../Editor/EditorRenderer"
 import EditorScene from "../Editor/EditorScene"
 
-import eventManager from "../EventManager"
+import EventManager from "../EventManager"
 class WebGl {
   width = 0
   height = 0
@@ -11,6 +11,15 @@ class WebGl {
   renderer!: EditorRenderer
   camera!: EditorCamera
   scene!: EditorScene
+
+  constructor() {
+    EventManager.addListener("ON_CONTEXT_CREATE", (e) =>
+      this.onGLContextCreate(e.payload?.gl)
+    )
+    EventManager.addListener("WINDOW_RESIZE", (e) => {
+      this.onWindowResize(e.payload?.width, e.payload?.height, e.payload?.scale)
+    })
+  }
 
   onWindowResize(width: number, height: number, scale: number) {
     if (this.camera === undefined) return
@@ -34,7 +43,7 @@ class WebGl {
     )
     this.camera = camera
     this.camera.init()
-    eventManager.addListener("test", () => {
+    EventManager.addListener("TEST", () => {
       console.log("testing2")
     })
     const renderer = new EditorRenderer({
@@ -59,4 +68,6 @@ class WebGl {
   }
 }
 
-export default WebGl
+const webGL = new WebGl()
+
+export default webGL

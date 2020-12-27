@@ -1,3 +1,4 @@
+import EventManager from "@EventManager"
 import { THREE } from "expo-three"
 import { GridHelper } from "three"
 import Cursor from "./Object3D/Cursor"
@@ -5,6 +6,10 @@ import Plane from "./Object3D/Plane"
 
 export default class Scene extends THREE.Scene {
   init() {
+    EventManager.addListener("WINDOW_RESIZE", () => {
+      console.log("resize")
+    })
+
     this.add(new GridHelper(100, 100))
 
     this.background = new THREE.Color(0x777777)

@@ -1,6 +1,6 @@
 import { PanResponderGestureState } from "react-native"
 import { THREE } from "expo-three"
-import WebGL from "../../Canvas/WebGL"
+import WebGL from "@Canvas/WebGL"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
