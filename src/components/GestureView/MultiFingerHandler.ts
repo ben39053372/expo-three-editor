@@ -22,11 +22,11 @@ const multiFingerMoveHandler = (
   blueprints: Blueprint[]
 ) => {
   if (gestureState.numberActiveTouches === 2) {
-    const originDistance = getFingerDistance(originState.evt)
-    const currDistance = getFingerDistance(evt)
+    // const originDistance = getFingerDistance(originState.evt)
+    // const currDistance = getFingerDistance(evt)
     // pitch
-    const scale = (currDistance - originDistance) / originDistance
-    console.log({ scale })
+    // const scale = (currDistance - originDistance) / originDistance
+    // console.log({ scale })
     blueprints[0].camera?.translateZ(-scale)
 
     // pan

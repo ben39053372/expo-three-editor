@@ -1,4 +1,4 @@
-import { PanResponderGestureState } from "react-native"
+import { PanResponderGestureState, Dimensions } from "react-native"
 import { THREE } from "expo-three"
 import WebGL from "../../Canvas/WebGL"
 
@@ -16,8 +16,10 @@ const oneFingerMoveHandler = (
 
   euler.setFromQuaternion(camera.quaternion)
 
-  euler.y += gestureState.vx * 0.001
-  euler.x += gestureState.vy * 0.001
+  const { width, height } = Dimensions.get("window")
+
+  euler.y += gestureState.vx / (height / 7)
+  euler.x += gestureState.vy / (width / 7)
 
   euler.x = Math.max(
     PI_2 - maxPolarAngle,

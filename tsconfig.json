@@ -9,7 +9,8 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./"
   },
-  "include": ["./src/**/*.ts", "src/components/GestureView/index.tsx"]
+  "include": ["./src/**/*.ts", "src/**/*.tsx"]
 }

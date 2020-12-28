@@ -13,7 +13,6 @@ class WebGl {
 
   onWindowResize(width: number, height: number, scale: number) {
     if (this.camera === undefined) return
-    console.log("resize")
 
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()

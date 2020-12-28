@@ -1,4 +1,5 @@
 import { THREE } from "expo-three"
+import { Platform } from "react-native"
 import { GridHelper } from "three"
 import Cursor from "./Object3D/Cursor"
 import Plane from "./Object3D/Plane"
@@ -13,9 +14,11 @@ export default class Scene extends THREE.Scene {
 
     this.add(new THREE.AxesHelper(10))
 
-    const cursor = new Cursor()
-    cursor.init()
-    this.add(cursor)
+    if (Platform.OS === "web") {
+      const cursor = new Cursor()
+      cursor.init()
+      this.add(cursor)
+    }
 
     const plane = new Plane()
     plane.init()
