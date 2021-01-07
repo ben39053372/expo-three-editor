@@ -5,9 +5,11 @@ import GestureView from "@Components/GestureView"
 import EventManager from "@EventManager"
 import WebGL from "./WebGL"
 
+const webGLInstance = new WebGL()
+
 const Canvas = () => {
   const { width, height, scale } = useWindowDimensions()
-  const webGL = useRef<WebGL>(new WebGL()).current
+  const webGL = useRef<WebGL>(webGLInstance).current
 
   useEffect(() => {
     EventManager.emit("WINDOW_RESIZE", {
