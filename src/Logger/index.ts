@@ -3,7 +3,7 @@ export default class Logger {
   logs: any[] = []
 
   push(log: any) {
-    this.logs.push(log)
+    this.logs.push({ log, createDate: new Date() })
     while (this.logs.length > this.max) {
       this.logs.shift()
     }

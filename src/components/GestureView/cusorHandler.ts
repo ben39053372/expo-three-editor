@@ -1,9 +1,7 @@
 import { THREE } from "expo-three"
-import WebGL from "@Canvas/WebGL"
-import eventManager from "@EventManager"
+import EventManager from "@EventManager"
 
 const cursorHandler = () => {
-  const raycaster = new THREE.Raycaster()
   const mouse = new THREE.Vector2()
 
   window.addEventListener(
@@ -13,11 +11,8 @@ const cursorHandler = () => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
 
-      eventManager.send({
-        type: "MOUSE_MOVE",
-        payload: {
-          mouse
-        }
+      EventManager.emit("MOUSE_MOVE", {
+        mouse
       })
     },
     { passive: false }

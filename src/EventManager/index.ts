@@ -1,41 +1,32 @@
-import { THREE } from "expo-three"
-import EventType from "./EventType"
+import { EventEmitter, payload } from "./EventManager.d"
+import EventType from "./types"
+import Logger from "../Logger"
 
-interface Event extends THREE.Event {
-  payload?: {
-    [key: string]: any
+class EventManager extends EventEmitter<EventType> {
+  logger: Logger
+
+  constructor(logger: Logger) {
+    super()
+    this.logger = logger
+    this.setMaxListeners(0)
+  }
+
+  emit(event: EventType, payload?: payload | undefined, ...args: any[]) {
+    this.logger.push({ action: "event_emit", event, payload })
+    return super.emit(event, payload, [...args])
+  }
+
+  on(
+    event: EventType,
+    listener: (payload?: payload | undefined, ...args: any[]) => void
+  ) {
+    this.logger.push({ action: "evnet_on", event })
+    return super.on(event, listener)
   }
 }
 
-interface EventFormat {
-  type: EventType
-  payload?: {
-    [key: string]: any
-  }
-}
+const logger = new Logger()
 
-class EventManager {
-  private instance = new THREE.EventDispatcher()
-
-  public send(event: EventFormat) {
-    // console.log(`[event manager]send: ${event}`)
-    this.instance.dispatchEvent(event)
-  }
-
-  public addListener(type: EventType, listener: (event: Event) => void) {
-    // console.log(`[event manager]add listener: ${type}`)
-    this.instance.addEventListener(type, listener)
-  }
-
-  public checkListener(type: EventType, listener: (event: Event) => void) {
-    this.instance.hasEventListener(type, listener)
-  }
-
-  public removeListener(type: EventType, listener: (event: Event) => void) {
-    this.instance.removeEventListener(type, listener)
-  }
-}
-
-const eventManager = new EventManager()
+const eventManager = new EventManager(logger)
 
 export default eventManager
