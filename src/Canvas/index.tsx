@@ -1,22 +1,31 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { ExpoWebGLRenderingContext, GLView } from "expo-gl"
-import WebGl from "./WebGL"
 import { useWindowDimensions } from "react-native"
-import GestureView from "../components/GestureView"
+import GestureView from "@Components/GestureView"
+import EventManager from "@EventManager"
+import WebGL from "./WebGL"
 
 const Canvas = () => {
-  const webGL = useRef(new WebGl()).current
-
   const { width, height, scale } = useWindowDimensions()
+  const webGL = useRef<WebGL>(new WebGL()).current
+
+  useEffect(() => {
+    EventManager.emit("WINDOW_RESIZE", {
+      height,
+      width,
+      scale
+    })
+  }, [width, height, scale])
 
   return (
     <GestureView webGL={webGL}>
       <GLView
         style={{ flex: 1 }}
-        onLayout={() => webGL.onWindowResize(width, height, scale)}
-        onContextCreate={(gl: ExpoWebGLRenderingContext) =>
-          webGL.onGLContextCreate(gl)
-        }
+        onContextCreate={(gl: ExpoWebGLRenderingContext) => {
+          EventManager.emit("ON_CONTEXT_CREATE", {
+            gl
+          })
+        }}
       />
     </GestureView>
   )

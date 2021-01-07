@@ -1,6 +1,6 @@
-import { PanResponderGestureState } from "react-native"
+import { PanResponderGestureState, Dimensions } from "react-native"
 import { THREE } from "expo-three"
-import WebGL from "../../Canvas/WebGL"
+import WebGl from "@Canvas/WebGL"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
@@ -9,15 +9,17 @@ const euler = new THREE.Euler(0, 0, 0, "YXZ")
 
 const oneFingerMoveHandler = (
   gestureState: PanResponderGestureState,
-  webgl: WebGL
+  webgl: WebGl
 ) => {
   // ref: https://github.com/mrdoob/three.js/blob/dev/examples/js/controls/PointerLockControls.js
   const camera = webgl.camera
 
+  const { width, height } = Dimensions.get("window")
+
   euler.setFromQuaternion(camera.quaternion)
 
-  euler.y += gestureState.vx * 0.001
-  euler.x += gestureState.vy * 0.001
+  euler.y += (gestureState.vx / width) * 5
+  euler.x += (gestureState.vy / height) * 5
 
   euler.x = Math.max(
     PI_2 - maxPolarAngle,

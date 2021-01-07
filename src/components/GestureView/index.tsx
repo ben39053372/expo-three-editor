@@ -6,7 +6,7 @@ import {
   View,
   ViewProps
 } from "react-native"
-import WebGl from "../../Canvas/WebGL"
+import WebGl from "@Canvas/WebGL"
 import oneFingerHandler from "./OneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
 
@@ -19,7 +19,7 @@ const GestureView = (props: props) => {
   let isPan: boolean = false
   let originState = useRef<GestureResponderEvent>().current
 
-  Platform.OS === "web" && cursorHandler(props.webGL)
+  Platform.OS === "web" && cursorHandler()
 
   const panResponder = React.useRef(
     PanResponder.create({
@@ -30,8 +30,8 @@ const GestureView = (props: props) => {
       onShouldBlockNativeResponder: () => true,
 
       // on start
-      onPanResponderGrant: (evt, gestureState) => {
-        isPan = false
+      onPanResponderGrant: (evt) => {
+        // isPan = false
         evt.preventDefault()
       },
       // on Move
@@ -50,12 +50,6 @@ const GestureView = (props: props) => {
           ) {
             originState = evt
           }
-          // multiFingerHandler(
-          //   evt,
-          //   gestureState,
-          //   originState,
-          //   blueprints
-          // );
         }
       }
     })

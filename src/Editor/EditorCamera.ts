@@ -1,12 +1,17 @@
 import { THREE } from "expo-three"
+import EventManager from "@EventManager"
+import { Service } from "typedi"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
 const PI_2 = Math.PI / 2
 
+@Service()
 class camera extends THREE.PerspectiveCamera {
   moveSpeed = 1
   rotateSpeed = 0.02
+
+  raycaster = new THREE.Raycaster()
 
   constructor(width: number, height: number) {
     super(45, width / height, 1, 1000)
@@ -15,6 +20,9 @@ class camera extends THREE.PerspectiveCamera {
   init() {
     this.position.set(0, 20, 20)
     this.lookAt(0, 0, 0)
+    EventManager.addListener("TEST", (e) => {
+      console.log("camera got the event", e)
+    })
   }
 
   setPosition(x: number, y: number, z: number) {
@@ -49,6 +57,14 @@ class camera extends THREE.PerspectiveCamera {
     const axis3D = new THREE.Vector3(axis2D.x, -axis2D.y, axis2D.y)
     this.translateOnAxis(axis3D, speed)
     this.position.y = height
+  }
+
+  shootRaycaster(coords: { x: number; y: number }) {
+    this.raycaster.setFromCamera(coords, this)
+  }
+
+  getIntersectObject(object: THREE.Object3D) {
+    this.raycaster.intersectObject(object)
   }
 }
 
