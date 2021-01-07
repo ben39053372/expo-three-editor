@@ -5,7 +5,7 @@ import GestureView from "@Components/GestureView"
 import EventManager from "@EventManager"
 import WebGL from "./WebGL"
 
-const webGLInstance = new WebGL()
+export const webGLInstance = new WebGL()
 
 const Canvas = () => {
   const { width, height, scale } = useWindowDimensions()
