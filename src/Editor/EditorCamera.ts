@@ -1,10 +1,12 @@
 import { THREE } from "expo-three"
 import EventManager from "@EventManager"
+import { Service } from "typedi"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
 const PI_2 = Math.PI / 2
 
+@Service()
 class camera extends THREE.PerspectiveCamera {
   moveSpeed = 1
   rotateSpeed = 0.02
