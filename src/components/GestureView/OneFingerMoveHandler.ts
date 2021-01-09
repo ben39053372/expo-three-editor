@@ -18,8 +18,8 @@ const oneFingerMoveHandler = (
 
   euler.setFromQuaternion(camera.quaternion)
 
-  euler.y += (gestureState.vx / width) * 6
-  euler.x += (gestureState.vy / height) * 6
+  euler.y += (gestureState.vx / width) * 10
+  euler.x += (gestureState.vy / height) * 10
 
   euler.x = Math.max(
     PI_2 - maxPolarAngle,

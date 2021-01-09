@@ -1,27 +1,23 @@
 import React, { useRef } from "react"
-import {
-  GestureResponderEvent,
-  PanResponder,
-  Platform,
-  View,
-  ViewProps
-} from "react-native"
+import { PanResponder, Platform, View, ViewProps } from "react-native"
 import WebGl from "@Canvas/WebGL"
-import oneFingerHandler from "./OneFingerMoveHandler"
+import oneFingerHandler from "./oneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
-import eventManager from "@EventManager"
+import clickHanlder from "./clickHandler"
 
 interface props extends ViewProps {
   children: React.ReactNode
   webGL: WebGl
 }
+interface touchPosition {
+  x: number
+  y: number
+  id: string
+}
 
 const GestureView = (props: props) => {
   let isPan: boolean = false
-  let originState = useRef<GestureResponderEvent>().current
-  // eslint-disable-next-line no-undef
-  let isClickTimeout: NodeJS.Timeout | null = null
-  let isClicked: boolean = false
+  let touchStartPosition = useRef<touchPosition[]>().current
 
   Platform.OS === "web" && cursorHandler()
 
@@ -35,9 +31,15 @@ const GestureView = (props: props) => {
 
       // on start
       onPanResponderGrant: (evt) => {
-        evt.preventDefault()
-        evt.stopPropagation()
         // isPan = false
+        touchStartPosition = evt.nativeEvent.touches.map((touch) => {
+          const touchPosition: touchPosition = {
+            x: touch.locationX,
+            y: touch.locationY,
+            id: touch.identifier
+          }
+          return touchPosition
+        })
       },
       // on Move
       onPanResponderMove: (evt, gestureState) => {
@@ -48,37 +50,15 @@ const GestureView = (props: props) => {
 
         // more than one finger
         if (gestureState.numberActiveTouches > 1) {
-          if (!originState) return
-          if (
-            originState?.nativeEvent.touches.length !== 2 &&
-            originState.nativeEvent.touches.length > 2
-          ) {
-            originState = evt
-          }
+          console.log(touchStartPosition)
         }
       },
       onPanResponderEnd: (evt, gestureState) => {
         if (gestureState.dx < 10 && gestureState.dy < 10) {
-          if (isClicked) {
-            // double click
-            eventManager.emit("MOUSE_DOUBLE_CLICK", {
-              gestureState
-            })
-            isClicked = false
-            clearTimeout(isClickTimeout!)
-          } else {
-            // click
-            eventManager.emit("MOUSE_CLICK", {
-              gestureState
-            })
-            isClickTimeout = setTimeout(() => {
-              isClicked = false
-              console.log("click")
-            }, 350)
-            isClicked = true
-          }
+          clickHanlder(gestureState)
         }
-      }
+      },
+      onPanResponderTerminationRequest: () => false
     })
   ).current
 

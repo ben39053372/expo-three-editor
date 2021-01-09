@@ -1,16 +1,16 @@
 import { ExpoWebGLRenderingContext } from "expo-gl"
-import EditorCamera from "@Editor/Camera"
-import EditorRenderer from "@Editor/Renderer"
-import EditorScene from "@Editor/Scene"
+import Camera from "@Editor/Camera"
+import Renderer from "@Editor/Renderer"
+import Scene from "@Editor/Scene"
 import EventManager from "../EventManager"
 
 export default class WebGl {
   width = 0
   height = 0
   timeout = 0
-  renderer!: EditorRenderer
-  camera!: EditorCamera
-  scene!: EditorScene
+  renderer!: Renderer
+  camera!: Camera
+  scene!: Scene
 
   constructor() {
     this.mountEvent()
@@ -56,7 +56,7 @@ export default class WebGl {
   }
 
   private initRenderer(gl: ExpoWebGLRenderingContext) {
-    const renderer = new EditorRenderer({
+    const renderer = new Renderer({
       gl,
       antialias: true
     })
@@ -64,10 +64,7 @@ export default class WebGl {
   }
 
   private initCamera(gl: ExpoWebGLRenderingContext) {
-    const camera = new EditorCamera(
-      gl.drawingBufferWidth,
-      gl.drawingBufferHeight
-    )
+    const camera = new Camera(gl.drawingBufferWidth, gl.drawingBufferHeight)
     this.camera = camera
     this.camera.init()
   }
@@ -77,7 +74,7 @@ export default class WebGl {
   }
 
   private initScene() {
-    const scene = new EditorScene()
+    const scene = new Scene()
     this.scene = scene
     this.scene.createEnv()
     this.scene.createHelper()
