@@ -1,7 +1,7 @@
 import { ExpoWebGLRenderingContext } from "expo-gl"
-import EditorCamera from "../Editor/EditorCamera"
-import EditorRenderer from "../Editor/EditorRenderer"
-import EditorScene from "../Editor/EditorScene"
+import EditorCamera from "@Editor/Camera"
+import EditorRenderer from "@Editor/Renderer"
+import EditorScene from "@Editor/Scene"
 import EventManager from "../EventManager"
 
 export default class WebGl {

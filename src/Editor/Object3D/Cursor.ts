@@ -2,7 +2,7 @@ import eventManager from "@EventManager"
 import { THREE } from "expo-three"
 import Plane from "./Plane"
 
-class cursor extends THREE.Mesh {
+class Cursor extends THREE.Mesh {
   raycaster: THREE.Raycaster
   camera: THREE.Camera
   plane: Plane
@@ -36,4 +36,4 @@ class cursor extends THREE.Mesh {
   }
 }
 
-export default cursor
+export default Cursor
