@@ -9,6 +9,7 @@ import {
 import WebGl from "@Canvas/WebGL"
 import oneFingerHandler from "./OneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
+import eventManager from "@EventManager"
 
 interface props extends ViewProps {
   children: React.ReactNode
@@ -18,6 +19,9 @@ interface props extends ViewProps {
 const GestureView = (props: props) => {
   let isPan: boolean = false
   let originState = useRef<GestureResponderEvent>().current
+  // eslint-disable-next-line no-undef
+  let isClickTimeout: NodeJS.Timeout | null = null
+  let isClicked: boolean = false
 
   Platform.OS === "web" && cursorHandler()
 
@@ -31,8 +35,9 @@ const GestureView = (props: props) => {
 
       // on start
       onPanResponderGrant: (evt) => {
-        // isPan = false
         evt.preventDefault()
+        evt.stopPropagation()
+        // isPan = false
       },
       // on Move
       onPanResponderMove: (evt, gestureState) => {
@@ -49,6 +54,28 @@ const GestureView = (props: props) => {
             originState.nativeEvent.touches.length > 2
           ) {
             originState = evt
+          }
+        }
+      },
+      onPanResponderEnd: (evt, gestureState) => {
+        if (gestureState.dx < 10 && gestureState.dy < 10) {
+          if (isClicked) {
+            // double click
+            eventManager.emit("MOUSE_DOUBLE_CLICK", {
+              gestureState
+            })
+            isClicked = false
+            clearTimeout(isClickTimeout!)
+          } else {
+            // click
+            eventManager.emit("MOUSE_CLICK", {
+              gestureState
+            })
+            isClickTimeout = setTimeout(() => {
+              isClicked = false
+              console.log("click")
+            }, 350)
+            isClicked = true
           }
         }
       }
