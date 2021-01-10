@@ -21,7 +21,7 @@ const Canvas = () => {
   }, [width, height, scale])
 
   return (
-    <UIView>
+    <UIView webGL={webGL}>
       <GestureView webGL={webGL}>
         <GLView
           style={{ flex: 1 }}
