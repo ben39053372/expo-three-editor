@@ -9,8 +9,9 @@ module.exports = function (api) {
           alias: {
             "@Editor": "./src/Editor",
             "@Canvas": "./src/Canvas",
-            "@Components": "./src/components",
-            "@EventManager": "./src/EventManager"
+            "@Components": "./src/Components",
+            "@EventManager": "./src/EventManager",
+            "@Style": "./src/Style"
           }
         }
       ]
