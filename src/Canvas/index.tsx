@@ -1,24 +1,19 @@
-import React, { useEffect, useRef } from "react"
+import React, { useRef } from "react"
 import { ExpoWebGLRenderingContext, GLView } from "expo-gl"
-import { useWindowDimensions } from "react-native"
-import GestureView from "@Components/GestureView"
+import GestureView from "@Canvas/components/GestureView"
 import EventManager from "@EventManager"
 import WebGL from "./WebGL"
-import UIView from "@Components/UIView"
+import UIView from "@Canvas/components/UIView"
+import useWindowResize from "./Hooks/useWindowResize"
+import useKeyboard from "./Hooks/useKeyboard"
 
 export const webGLInstance = new WebGL()
 
 const Canvas = () => {
-  const { width, height, scale } = useWindowDimensions()
   const webGL = useRef<WebGL>(webGLInstance).current
 
-  useEffect(() => {
-    EventManager.emit("WINDOW_RESIZE", {
-      height,
-      width,
-      scale
-    })
-  }, [width, height, scale])
+  useWindowResize()
+  useKeyboard()
 
   return (
     <UIView webGL={webGL}>
