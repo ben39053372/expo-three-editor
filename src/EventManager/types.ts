@@ -5,7 +5,10 @@ const EventTypePool = {
   WINDOW_RESIZE: "WINDOW_RESIZE",
   MOUSE_MOUSE: "MOUSE_MOVE",
   MOUSE_CLICK: "MOUSE_CLICK",
-  MOUSE_DOUBLE_CLICK: "MOUSE_DOUBLE_CLICK"
+  MOUSE_DOUBLE_CLICK: "MOUSE_DOUBLE_CLICK",
+
+  KEY_UP: `${String}_UP`,
+  KEY_DOWN: `${String}_DOWN`
 } as const
 
 type EventType = typeof EventTypePool[keyof typeof EventTypePool]

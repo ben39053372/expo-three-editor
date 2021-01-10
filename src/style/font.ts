@@ -15,6 +15,10 @@ const font = StyleSheet.create({
   },
   h5: {
     fontSize: 12
+  },
+  debugText: {
+    fontSize: 5,
+    color: "red"
   }
 })
 
