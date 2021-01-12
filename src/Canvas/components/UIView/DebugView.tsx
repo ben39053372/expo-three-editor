@@ -6,6 +6,7 @@ import { THREE } from "expo-three"
 import { UIViewProps } from "."
 import useUpdate from "./useUpdate"
 import Loading from "@Components/Loading"
+import eventManager from "@EventManager"
 
 const round = (float: number) => {
   return float.toFixed(2)
@@ -22,10 +23,8 @@ const DebugView = (props: UIViewProps) => {
   useUpdate()
 
   const webGL = props.webGL
-
-  const webGLRotation = webGL.camera?.rotation
-
-  const webGLPosition = webGL.camera?.position
+  const camera = webGL.camera
+  const scene = webGL.scene
 
   return (
     <ScrollView
@@ -42,36 +41,64 @@ const DebugView = (props: UIViewProps) => {
     >
       {webGL.camera && webGL.scene ? (
         <View nativeID="dataView" style={[styles.dodgeStats, styles.horizList]}>
-          <View>
-            <DebugFont>
-              {`camera rotation: X: ${round(webGLRotation.x)}, Y: ${round(
-                webGLRotation.y
-              )}, Z: ${round(webGLRotation.z)}`}
-            </DebugFont>
-            <DebugFont>
-              {`camera position: X: ${round(webGLPosition.x)}, Y: ${round(
-                webGLPosition.y
-              )}, Z: ${round(webGLPosition.z)}`}
-            </DebugFont>
-          </View>
-          <View>
-            {/* <Text>{JSON.stringify(webGL.scene.children)}</Text> */}
-            {webGL.scene.children.map((child) => {
-              return (
-                <View key={child.uuid}>
-                  <DebugFont>
-                    {child.id}-{child.name || child.type}: position:
-                    {displayObj3D(child.position)}
-                  </DebugFont>
-                </View>
-              )
-            })}
-          </View>
+          <CameraInfoView camera={camera} />
+          <SceneObjectView scene={scene} />
+          <EventQuene />
         </View>
       ) : (
         <Loading isLoading={true} />
       )}
     </ScrollView>
+  )
+}
+
+const CameraInfoView = (props: { camera: THREE.Camera }) => {
+  return (
+    <View>
+      <DebugFont>
+        {`camera rotation: X: ${round(props.camera.rotation.x)}, Y: ${round(
+          props.camera.rotation.y
+        )}, Z: ${round(props.camera.rotation.z)}`}
+      </DebugFont>
+      <DebugFont>
+        {`camera position: X: ${round(props.camera.position.x)}, Y: ${round(
+          props.camera.position.y
+        )}, Z: ${round(props.camera.position.z)}`}
+      </DebugFont>
+    </View>
+  )
+}
+
+const EventQuene = () => {
+  const logs = eventManager.logger.logs
+  return (
+    <View>
+      {logs.map((log, key) => {
+        return (
+          <View key={key}>
+            <DebugFont>{JSON.stringify(log, null, 2)}</DebugFont>
+          </View>
+        )
+      })}
+    </View>
+  )
+}
+
+const SceneObjectView = (props: { scene: THREE.Scene }) => {
+  return (
+    <View>
+      {/* <Text>{JSON.stringify(webGL.scene.children)}</Text> */}
+      {props.scene.children.map((child) => {
+        return (
+          <View key={child.uuid}>
+            <DebugFont>
+              {child.id}-{child.name || child.type}: position:
+              {displayObj3D(child.position)}
+            </DebugFont>
+          </View>
+        )
+      })}
+    </View>
   )
 }
 

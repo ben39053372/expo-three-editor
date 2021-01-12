@@ -8,7 +8,8 @@ const EventTypePool = {
   MOUSE_DOUBLE_CLICK: "MOUSE_DOUBLE_CLICK",
 
   KEY_UP: `${String}_UP`,
-  KEY_DOWN: `${String}_DOWN`
+  KEY_DOWN: `${String}_DOWN`,
+  SHOW_LOGS: "SHOW_LOGS"
 } as const
 
 type EventType = typeof EventTypePool[keyof typeof EventTypePool]
