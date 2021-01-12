@@ -13,6 +13,7 @@ class EventManager extends EventEmitter<EventType> {
 
   emit(event: EventType, payload?: payload | undefined, ...args: any[]) {
     this.logger.push({ action: "event_emit", event, payload })
+    console.log({ event })
     return super.emit(event, payload, [...args])
   }
 

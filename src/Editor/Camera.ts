@@ -23,6 +23,19 @@ class camera extends THREE.PerspectiveCamera implements Objective {
     EventManager.on("A_DOWN", () => this.move(new Vector2(-1, 0)))
     EventManager.on("S_DOWN", () => this.move(new Vector2(0, 1)))
     EventManager.on("D_DOWN", () => this.move(new Vector2(1, 0)))
+    EventManager.on("ARROWUP_DOWN", (e) =>
+      this.rotateByAxis2D(new THREE.Vector2(0, -1))
+    )
+    EventManager.on("ARROWDOWN_DOWN", (e) =>
+      this.rotateByAxis2D(new THREE.Vector2(0, 1))
+    )
+    EventManager.on("ARROWLEFT_DOWN", (e) =>
+      this.rotateByAxis2D(new THREE.Vector2(-1, 0))
+    )
+    EventManager.on("ARROWRIGHT_DOWN", (e) =>
+      this.rotateByAxis2D(new THREE.Vector2(1, 0))
+    )
+    EventManager.on("PAGEDOWN_DOWN", () => this.lookDown())
   }
 
   init() {
@@ -31,6 +44,10 @@ class camera extends THREE.PerspectiveCamera implements Objective {
     EventManager.addListener("TEST", (e) => {
       console.log("camera got the event", e)
     })
+  }
+
+  lookDown() {
+    this.rotation.set(-(Math.PI / 2), 0, this.rotation.z)
   }
 
   setPosition(x: number, y: number, z: number) {
@@ -46,7 +63,7 @@ class camera extends THREE.PerspectiveCamera implements Objective {
     this.translateOnAxis(new THREE.Vector3(axis2D?.x, 0, axis2D?.y), speed)
   }
 
-  rotateLookAt(axis2D: THREE.Vector2) {
+  rotateByAxis2D(axis2D: THREE.Vector2) {
     const euler = new THREE.Euler(0, 0, 0, "YXZ")
     euler.setFromQuaternion(this.quaternion)
 
