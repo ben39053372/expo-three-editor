@@ -1,26 +1,30 @@
 import React, { useRef } from "react"
-import {
-  GestureResponderEvent,
-  PanResponder,
-  Platform,
-  View,
-  ViewProps
-} from "react-native"
-import WebGl from "../../Canvas/WebGL"
-import oneFingerHandler from "./OneFingerMoveHandler"
+import { PanResponder, Platform, View, ViewProps } from "react-native"
+import WebGl from "@Canvas/WebGL"
+import oneFingerHandler from "./oneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
+import clickHanlder from "./clickHandler"
 
 interface props extends ViewProps {
   children: React.ReactNode
   webGL: WebGl
 }
+interface touchPosition {
+  x: number
+  y: number
+  id: string
+}
 
 const GestureView = (props: props) => {
   let isPan: boolean = false
-  let originState = useRef<GestureResponderEvent>().current
+  let touchStartPosition = useRef<touchPosition[]>().current
 
+<<<<<<< HEAD:src/components/GestureView/index.tsx
   // cursor
   Platform.OS === "web" && cursorHandler(props.webGL)
+=======
+  Platform.OS === "web" && cursorHandler()
+>>>>>>> 3a9bba75a8bbda19d62721206ea8b08350780666:src/Canvas/components/GestureView/index.tsx
 
   // gesture
   const panResponder = React.useRef(
@@ -32,9 +36,16 @@ const GestureView = (props: props) => {
       onShouldBlockNativeResponder: () => true,
 
       // on start
-      onPanResponderGrant: (evt, gestureState) => {
-        isPan = false
-        evt.preventDefault()
+      onPanResponderGrant: (evt) => {
+        // isPan = false
+        touchStartPosition = evt.nativeEvent.touches.map((touch) => {
+          const touchPosition: touchPosition = {
+            x: touch.locationX,
+            y: touch.locationY,
+            id: touch.identifier
+          }
+          return touchPosition
+        })
       },
       // on Move
       onPanResponderMove: (evt, gestureState) => {
@@ -46,21 +57,15 @@ const GestureView = (props: props) => {
 
         // more than one finger
         if (gestureState.numberActiveTouches > 1) {
-          if (!originState) return
-          if (
-            originState?.nativeEvent.touches.length !== 2 &&
-            originState.nativeEvent.touches.length > 2
-          ) {
-            originState = evt
-          }
-          // multiFingerHandler(
-          //   evt,
-          //   gestureState,
-          //   originState,
-          //   blueprints
-          // );
+          console.log(touchStartPosition)
         }
-      }
+      },
+      onPanResponderEnd: (evt, gestureState) => {
+        if (gestureState.dx < 10 && gestureState.dy < 10) {
+          clickHanlder(gestureState)
+        }
+      },
+      onPanResponderTerminationRequest: () => false
     })
   ).current
 

@@ -10,9 +10,10 @@ class Plane extends THREE.Mesh {
       opacity: 0
     })
     super(geometry, material)
+    this.init()
   }
 
-  init() {
+  private init() {
     this.name = "plane"
     this.rotateX(Math.PI / 2)
   }
