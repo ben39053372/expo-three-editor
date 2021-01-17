@@ -7,8 +7,10 @@ class EventManager extends EventEmitter<EventType> {
 
   constructor(logger: Logger) {
     super()
+    console.log("new")
     this.logger = logger
     this.setMaxListeners(0)
+    this.on("L_DOWN", () => this.logger.showLogs())
   }
 
   emit(event: EventType, payload?: payload | undefined, ...args: any[]) {
