@@ -12,6 +12,10 @@ export default class WebGl {
   camera!: Camera
   scene!: Scene
 
+<<<<<<< HEAD
+  onWindowResize(width: number, height: number, scale: number) {
+    if (this.camera === undefined) return
+=======
   constructor() {
     this.mountEvent()
   }
@@ -23,6 +27,7 @@ export default class WebGl {
     this.initObject()
     this.start()
   }
+>>>>>>> 3a9bba75a8bbda19d62721206ea8b08350780666
 
   public onWindowResize(width: number, height: number, scale: number) {
     if (this.camera === undefined) return

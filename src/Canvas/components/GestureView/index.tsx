@@ -19,8 +19,14 @@ const GestureView = (props: props) => {
   let isPan: boolean = false
   let touchStartPosition = useRef<touchPosition[]>().current
 
+<<<<<<< HEAD:src/components/GestureView/index.tsx
+  // cursor
+  Platform.OS === "web" && cursorHandler(props.webGL)
+=======
   Platform.OS === "web" && cursorHandler()
+>>>>>>> 3a9bba75a8bbda19d62721206ea8b08350780666:src/Canvas/components/GestureView/index.tsx
 
+  // gesture
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -43,6 +49,7 @@ const GestureView = (props: props) => {
       },
       // on Move
       onPanResponderMove: (evt, gestureState) => {
+        evt.preventDefault()
         if (!isPan && gestureState.dx > 10 && gestureState.dy > 10) isPan = true
         // one finger
         if (gestureState.numberActiveTouches === 1)
