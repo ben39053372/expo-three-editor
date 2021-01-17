@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ben39053372.expothreeeditor"
     },
     "web": {
       "favicon": "./assets/favicon.png"

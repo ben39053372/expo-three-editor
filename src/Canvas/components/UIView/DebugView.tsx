@@ -43,7 +43,7 @@ const DebugView = (props: UIViewProps) => {
         <View nativeID="dataView" style={[styles.dodgeStats, styles.horizList]}>
           <CameraInfoView camera={camera} />
           <SceneObjectView scene={scene} />
-          <EventQuene />
+          {/* <EventQuene /> */}
         </View>
       ) : (
         <Loading isLoading={true} />

@@ -22,10 +22,12 @@ const useKeyboard = () => {
   }
 
   useEffect(() => {
+    console.log("useKeyBoard mount")
     window.addEventListener("keydown", keyDownEv)
     window.addEventListener("keyup", keyUpEv)
 
     return () => {
+      console.log("useKeyBoard unmount")
       window.removeEventListener("keydown", keyDownEv)
       window.removeEventListener("keyup", keyUpEv)
     }
