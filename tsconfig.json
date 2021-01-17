@@ -1,20 +1,5 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
-    "allowSyntheticDefaultImports": true,
-    "module": "CommonJS",
-    "target": "ES2017",
-    "jsx": "react-native",
-    "lib": ["dom", "esnext"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "strict": true,
-    "baseUrl": "./"
-  },
-  "include": ["./src/**/*.ts", "src/**/*.tsx"]
-=======
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Basic Options */
@@ -96,5 +81,4 @@
     "resolveJsonModule": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
->>>>>>> 3a9bba75a8bbda19d62721206ea8b08350780666
 }

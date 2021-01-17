@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useRef } from "react"
 import { ExpoWebGLRenderingContext, GLView } from "expo-gl"
 import GestureView from "@Canvas/components/GestureView"
 import EventManager from "@EventManager"
@@ -14,10 +14,6 @@ const Canvas = () => {
 
   useWindowResize()
   useKeyboard()
-
-  useEffect(() => {
-    webGL.onWindowResize(width, height, scale)
-  }, [useWindowDimensions()])
 
   return (
     <UIView webGL={webGL}>
