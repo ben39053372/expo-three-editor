@@ -2,7 +2,6 @@ import { ExpoWebGLRenderingContext } from "expo-gl"
 import Camera from "@Editor/Camera"
 import Renderer from "@Editor/Renderer"
 import Scene from "@Editor/Scene"
-import EventManager from "../EventManager"
 
 export default class WebGl {
   width = 0
@@ -11,10 +10,6 @@ export default class WebGl {
   renderer!: Renderer
   camera!: Camera
   scene!: Scene
-
-  constructor() {
-    this.mountEvent()
-  }
 
   public onGLContextCreate(gl: ExpoWebGLRenderingContext) {
     this.initScene()
@@ -44,15 +39,6 @@ export default class WebGl {
     cancelAnimationFrame(this.timeout)
     this.timeout = -1
     console.log(this.timeout)
-  }
-
-  private mountEvent() {
-    EventManager.on("ON_CONTEXT_CREATE", (payload) => {
-      this.onGLContextCreate(payload?.gl)
-    })
-    EventManager.on("WINDOW_RESIZE", (payload) => {
-      this.onWindowResize(payload?.width, payload?.height, payload?.scale)
-    })
   }
 
   private initRenderer(gl: ExpoWebGLRenderingContext) {

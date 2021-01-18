@@ -1,17 +1,9 @@
-import EventManager from "@EventManager"
 import { THREE } from "expo-three"
 import { GridHelper } from "three"
 import Cursor from "./Object3D/Cursor"
 import Plane from "./Object3D/Plane"
 
 export default class Scene extends THREE.Scene {
-  constructor() {
-    super()
-    EventManager.addListener("WINDOW_RESIZE", () => {
-      console.log("resize")
-    })
-  }
-
   createHelper() {
     this.add(new GridHelper(100, 100), new THREE.AxesHelper(10))
   }

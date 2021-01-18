@@ -1,7 +1,6 @@
 import React, { useRef } from "react"
 import { ExpoWebGLRenderingContext, GLView } from "expo-gl"
 import GestureView from "@Canvas/components/GestureView"
-import EventManager from "@EventManager"
 import WebGL from "./WebGL"
 import UIView from "@Canvas/components/UIView"
 import useWindowResize from "./Hooks/useWindowResize"
@@ -20,11 +19,7 @@ const Canvas = () => {
       <GestureView webGL={webGL}>
         <GLView
           style={{ flex: 1 }}
-          onContextCreate={(gl: ExpoWebGLRenderingContext) => {
-            EventManager.emit("ON_CONTEXT_CREATE", {
-              gl
-            })
-          }}
+          onContextCreate={(gl: ExpoWebGLRenderingContext) => {}}
         />
       </GestureView>
     </UIView>

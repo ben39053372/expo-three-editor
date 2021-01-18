@@ -1,13 +1,10 @@
 import { THREE } from "expo-three"
-import EventManager from "@EventManager"
-import Objective from "./Object3D/@Objective"
-import { Vector2 } from "three"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
 const PI_2 = Math.PI / 2
 
-class camera extends THREE.PerspectiveCamera implements Objective {
+class camera extends THREE.PerspectiveCamera {
   moveSpeed = 1
   rotateSpeed = 0.02
 
@@ -15,35 +12,11 @@ class camera extends THREE.PerspectiveCamera implements Objective {
 
   constructor(width: number, height: number) {
     super(45, width / height, 1, 1000)
-    this.mountEvent()
-  }
-
-  mountEvent() {
-    EventManager.on("W_DOWN", () => this.move(new Vector2(0, -1)))
-    EventManager.on("A_DOWN", () => this.move(new Vector2(-1, 0)))
-    EventManager.on("S_DOWN", () => this.move(new Vector2(0, 1)))
-    EventManager.on("D_DOWN", () => this.move(new Vector2(1, 0)))
-    EventManager.on("ARROWUP_DOWN", (e) =>
-      this.rotateByAxis2D(new THREE.Vector2(0, -1))
-    )
-    EventManager.on("ARROWDOWN_DOWN", (e) =>
-      this.rotateByAxis2D(new THREE.Vector2(0, 1))
-    )
-    EventManager.on("ARROWLEFT_DOWN", (e) =>
-      this.rotateByAxis2D(new THREE.Vector2(-1, 0))
-    )
-    EventManager.on("ARROWRIGHT_DOWN", (e) =>
-      this.rotateByAxis2D(new THREE.Vector2(1, 0))
-    )
-    EventManager.on("PAGEDOWN_DOWN", () => this.lookDown())
   }
 
   init() {
     this.position.set(0, 20, 20)
     this.lookAt(0, 0, 0)
-    EventManager.addListener("TEST", (e) => {
-      console.log("camera got the event", e)
-    })
   }
 
   lookDown() {
