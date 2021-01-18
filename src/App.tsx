@@ -2,7 +2,7 @@ import React from "react"
 import { StatusBar } from "expo-status-bar"
 import { Platform, StyleSheet, View } from "react-native"
 import FPSStats from "react-fps-stats"
-import Canvas from "./src/Canvas"
+import Canvas from "./Canvas"
 
 export default function App() {
   return (
