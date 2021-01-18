@@ -11,7 +11,7 @@ export const webGLInstance = new WebGL()
 const Canvas = () => {
   const webGL = useRef<WebGL>(webGLInstance).current
 
-  useWindowResize()
+  useWindowResize(webGL)
   useKeyboard()
 
   return (
@@ -19,7 +19,9 @@ const Canvas = () => {
       <GestureView webGL={webGL}>
         <GLView
           style={{ flex: 1 }}
-          onContextCreate={(gl: ExpoWebGLRenderingContext) => {}}
+          onContextCreate={(gl: ExpoWebGLRenderingContext) => {
+            webGL.onGLContextCreate(gl)
+          }}
         />
       </GestureView>
     </UIView>
