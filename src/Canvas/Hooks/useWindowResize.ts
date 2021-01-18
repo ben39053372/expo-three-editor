@@ -1,9 +1,12 @@
+import WebGL from "@Canvas/WebGL"
 import { useEffect } from "react"
 import { useWindowDimensions } from "react-native"
 
-const useWindowResize = () => {
+const useWindowResize = (webGl: WebGL) => {
   const { height, width, scale } = useWindowDimensions()
-  useEffect(() => {}, [height, width, scale])
+  useEffect(() => {
+    webGl.onWindowResize(width, height, scale)
+  }, [height, width, scale])
 }
 
 export default useWindowResize
