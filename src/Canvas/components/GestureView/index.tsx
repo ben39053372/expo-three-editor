@@ -19,7 +19,7 @@ const GestureView = (props: props) => {
   let isPan: boolean = false
   let touchStartPosition = useRef<touchPosition[]>().current
 
-  Platform.OS === "web" && cursorHandler()
+  Platform.OS === "web" && cursorHandler(props.webGL)
 
   const panResponder = React.useRef(
     PanResponder.create({
