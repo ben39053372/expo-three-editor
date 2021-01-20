@@ -26,7 +26,6 @@ const oneFingerMoveHandler = (
     Math.min(_90 - minPolarAngle, euler.x)
   )
   camera.quaternion.setFromEuler(euler)
-  console.log(camera.useForPanObj.position)
 }
 
 export default oneFingerMoveHandler
