@@ -12,10 +12,10 @@ const cursorHandler = (webGl: WebGl) => {
         event.preventDefault()
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-        const cursor = webGl.scene.objects.find(
+        const cursor = webGl.scene?.objects.find(
           (obj) => obj instanceof Cursor
-        ) as Cursor
-        cursor.onMouseMove(mouse)
+        ) as Cursor | undefined
+        cursor?.onMouseMove(mouse)
       },
       { passive: false }
     )

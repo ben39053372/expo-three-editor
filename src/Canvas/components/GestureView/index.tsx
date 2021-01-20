@@ -4,6 +4,7 @@ import WebGl from "@Canvas/WebGL"
 import oneFingerHandler from "./oneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
 import clickHanlder from "./clickHandler"
+import twoFingerMoveHandler from "./twoFingerHandler"
 
 interface props extends ViewProps {
   children: React.ReactNode
@@ -40,6 +41,7 @@ const GestureView = (props: props) => {
           }
           return touchPosition
         })
+        console.log(touchStartPosition)
       },
       // on Move
       onPanResponderMove: (evt, gestureState) => {
@@ -49,8 +51,8 @@ const GestureView = (props: props) => {
           oneFingerHandler(gestureState, props.webGL)
 
         // more than one finger
-        if (gestureState.numberActiveTouches > 1) {
-          console.log(touchStartPosition)
+        if (gestureState.numberActiveTouches === 2) {
+          twoFingerMoveHandler(gestureState, props.webGL)
         }
       },
       onPanResponderEnd: (evt, gestureState) => {

@@ -1,4 +1,5 @@
 import { THREE } from "expo-three"
+import { Euler } from "three"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
@@ -7,6 +8,7 @@ const PI_2 = Math.PI / 2
 class camera extends THREE.PerspectiveCamera {
   moveSpeed = 1
   rotateSpeed = 0.02
+  useForPanObj = new THREE.Object3D()
 
   raycaster = new THREE.Raycaster()
 
@@ -17,6 +19,7 @@ class camera extends THREE.PerspectiveCamera {
   init() {
     this.position.set(0, 20, 20)
     this.lookAt(0, 0, 0)
+    this.attach(this.useForPanObj)
   }
 
   lookDown() {
@@ -51,10 +54,22 @@ class camera extends THREE.PerspectiveCamera {
   }
 
   panCamera(axis2D: THREE.Vector2, speed = this.moveSpeed) {
-    const height = this.position.y
-    const axis3D = new THREE.Vector3(axis2D.x, -axis2D.y, axis2D.y)
-    this.translateOnAxis(axis3D, speed)
-    this.position.y = height
+    this.useForPanObj.position.set(
+      this.position.x,
+      this.position.y,
+      this.position.z
+    )
+    this.useForPanObj.setRotationFromEuler(new Euler(0, this.rotation.y, 0))
+    this.useForPanObj.translateOnAxis(
+      new THREE.Vector3(-axis2D.x, 0, -axis2D.y),
+      speed
+    )
+    this.position.set(
+      this.useForPanObj.position.x,
+      this.position.y,
+      this.useForPanObj.position.z
+    )
+    // this.translateOnAxis(axis3D, speed)
   }
 
   shootRaycaster(coords: { x: number; y: number }) {
