@@ -35,8 +35,8 @@ class camera extends THREE.PerspectiveCamera {
     return new THREE.Vector3(0, 0, -1).applyQuaternion(this.quaternion)
   }
 
-  move(axis2D?: THREE.Vector2, speed = this.moveSpeed) {
-    this.translateOnAxis(new THREE.Vector3(axis2D?.x, 0, axis2D?.y), speed)
+  move(axis2D: THREE.Vector2, speed = this.moveSpeed) {
+    this.translateOnAxis(new THREE.Vector3(axis2D.x, 0, -axis2D.y), speed)
   }
 
   rotateByAxis2D(axis2D: THREE.Vector2) {
@@ -61,7 +61,7 @@ class camera extends THREE.PerspectiveCamera {
     )
     this.useForPanObj.setRotationFromEuler(new Euler(0, this.rotation.y, 0))
     this.useForPanObj.translateOnAxis(
-      new THREE.Vector3(-axis2D.x, 0, -axis2D.y),
+      new THREE.Vector3(axis2D.x, 0, -axis2D.y),
       speed
     )
     this.position.set(

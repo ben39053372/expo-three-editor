@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
   UIView: {
-    flex: 1
+    flex: 1,
+    flexDirection: "row"
   },
   dodgeStats: {
     marginLeft: 80

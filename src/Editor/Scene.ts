@@ -16,9 +16,17 @@ export default class Scene extends THREE.Scene {
     this.background = new THREE.Color(0x777777)
     this.fog = new THREE.FogExp2(0xffffff, 0.00015)
 
-    const ambientLight = new THREE.AmbientLight(0x404040)
+    const ambientLight = new THREE.AmbientLight(0xffffff)
     ambientLight.name = "ambientLight"
     this.add(ambientLight)
+
+    const dl = new THREE.DirectionalLight(0xffffff)
+    dl.position.set(100, 100, 100)
+    dl.lookAt(this.position)
+    this.add(dl)
+
+    const dlHelper = new THREE.DirectionalLightHelper(dl)
+    this.add(dlHelper)
   }
 
   genBasicObject(camera: THREE.Camera) {

@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next"
 import FPSStats from "react-fps-stats"
 import { padding } from "@Style/spacing"
 import { ThemeContext } from "@Theme"
+import Box from "@Editor/Object3D/Box"
 
 export interface UIViewProps {
   children?: React.ReactNode
@@ -31,6 +32,12 @@ const UIView = (props: UIViewProps) => {
     webGL.scene.add(ball)
   }
 
+  const addBox = () => {
+    const box = new Box(5, 5, 5)
+    webGL.scene.add(box)
+    // box.position.set(Math.random(), Math.random(), Math.random())
+  }
+
   return (
     <View style={[styles.UIView]}>
       {/* {Platform.OS === "web" && <FPSStats />} */}
@@ -47,6 +54,7 @@ const UIView = (props: UIViewProps) => {
       </View>
 
       {true && <DebugView webGL={webGL} />}
+      <DebugView webGL={webGL} />
       <View style={styles.canvas}>{props.children}</View>
     </View>
   )
