@@ -12,7 +12,7 @@ const Canvas = () => {
   const webGL = useRef<WebGL>(webGLInstance).current
 
   useWindowResize(webGL)
-  useKeyboard()
+  useKeyboard(webGL)
 
   return (
     <UIView webGL={webGL}>

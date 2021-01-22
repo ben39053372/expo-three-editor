@@ -2,14 +2,14 @@ import { THREE } from "expo-three"
 import Plane from "./Plane"
 
 class Cursor extends THREE.Mesh {
-  raycaster: THREE.Raycaster
+  rayCaster: THREE.Raycaster
   camera: THREE.Camera
   plane: Plane
   constructor(camera: THREE.Camera, plane: Plane) {
     const geometry = new THREE.ConeGeometry(0.2, 1, 10)
     const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
     super(geometry, material)
-    this.raycaster = new THREE.Raycaster()
+    this.rayCaster = new THREE.Raycaster()
     this.camera = camera
     this.plane = plane
     this.init()
@@ -21,9 +21,9 @@ class Cursor extends THREE.Mesh {
   }
 
   onMouseMove(mouse: THREE.Vector2) {
-    this.raycaster.setFromCamera(mouse, this.camera)
+    this.rayCaster.setFromCamera(mouse, this.camera)
 
-    const intersects = this.raycaster.intersectObject(this.plane)
+    const intersects = this.rayCaster.intersectObject(this.plane)
     this.position.set(
       intersects[0]?.point.x || 0,
       0,

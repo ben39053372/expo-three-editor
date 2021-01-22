@@ -6,6 +6,7 @@ import { THREE } from "expo-three"
 import { UIViewProps } from "."
 import useUpdate from "./useUpdate"
 import Loading from "@Components/Loading"
+import camera from "@Editor/Camera"
 
 const round = (float: number) => {
   return float.toFixed(2)
@@ -51,7 +52,7 @@ const DebugView = (props: UIViewProps) => {
   )
 }
 
-const CameraInfoView = (props: { camera: THREE.Camera }) => {
+const CameraInfoView = (props: { camera: camera }) => {
   return (
     <View>
       <DebugFont>
@@ -63,6 +64,13 @@ const CameraInfoView = (props: { camera: THREE.Camera }) => {
         {`camera position: X: ${round(props.camera.position.x)}, Y: ${round(
           props.camera.position.y
         )}, Z: ${round(props.camera.position.z)}`}
+      </DebugFont>
+      <DebugFont>
+        {`camera useForPanObject: X: ${round(
+          props.camera.useForPanObj.position.x
+        )}, Y: ${round(props.camera.useForPanObj.position.y)}, Z: ${round(
+          props.camera.position.z
+        )}`}
       </DebugFont>
     </View>
   )

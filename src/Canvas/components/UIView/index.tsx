@@ -1,9 +1,9 @@
 import WebGl from "@Canvas/WebGL"
-import React, { useEffect } from "react"
+import React from "react"
 import { Button, View } from "react-native"
 import styles from "./style"
 import DebugView from "./DebugView"
-import { getBreakpoint } from "@Style/breakpoint"
+import Box from "@Editor/Object3D/Box"
 
 export interface UIViewProps {
   children?: React.ReactNode
@@ -14,12 +14,15 @@ const UIView = (props: UIViewProps) => {
   const webGL = props.webGL
 
   const addBox = () => {
-    const box = 
+    const box = new Box(5, 5, 5)
+    webGL.scene.add(box)
+    // box.position.set(Math.random(), Math.random(), Math.random())
   }
 
   return (
     <View style={[styles.UIView]}>
-      <Button title="add a box" onPress={addBox} />
+      <Button title="add a Box" onPress={addBox} />
+      <Button title="add a Ball" onPress={addBox} />
       <DebugView webGL={webGL} />
       <View style={styles.canvas}>{props.children}</View>
     </View>
