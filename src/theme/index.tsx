@@ -1,23 +1,61 @@
-import React, { createContext, useState, ReactNode, useEffect } from "react"
-import { LightTheme } from "./themes"
+import React, { createContext, useState, ReactNode } from "react"
 
-export const ThemeContext = createContext({})
-ThemeContext.displayName = "Theme"
+export interface Themes {
+  [themeName: string]: Theme
+}
 
-interface theme {}
+export interface Theme {
+  color?: Colors
+}
+
+export interface Colors {
+  primary: {
+    main: string
+    light: string
+    dark: string
+  }
+  secondary: {
+    main: string
+    light: string
+    dark: string
+  }
+  error: string
+  warning: string
+  info: string
+  success: string
+}
+
+export type ColorType = keyof Colors
 
 interface ThemeProviderProps {
   children: ReactNode
-  theme: theme
+  themes: Themes
 }
 
+interface ThemeContextDefaultValue {
+  theme: Theme
+  themeName: keyof Themes
+  setThemeName: (theme: keyof Themes) => void
+}
+
+export const ThemeContext = createContext<ThemeContextDefaultValue>({
+  theme: {},
+  themeName: "Dark",
+  setThemeName: () => {}
+})
+ThemeContext.displayName = "Theme"
+
 const ThemeProvider = (props: ThemeProviderProps) => {
-  useEffect(() => {
-    setTheme(props.theme)
-  }, [props.theme])
-  const [theme, setTheme] = useState<theme>()
+  const [themeName, setThemeName] = useState<keyof Themes>("default")
+
   return (
-    <ThemeContext.Provider value={theme || LightTheme}>
+    <ThemeContext.Provider
+      value={{
+        theme: props.themes[themeName],
+        themeName,
+        setThemeName
+      }}
+    >
       {props.children}
     </ThemeContext.Provider>
   )

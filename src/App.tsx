@@ -6,11 +6,12 @@ import Canvas from "./Canvas"
 import { Provider as ReduxProvider } from "react-redux"
 import store from "./store"
 import ThemeProvider from "./theme"
+import themes from "./theme/themes"
 
 export default function App() {
   return (
     <ReduxProvider store={store}>
-      <ThemeProvider theme={{}}>
+      <ThemeProvider themes={themes}>
         <View style={styles.container}>
           <Canvas />
           <StatusBar style="auto" />
