@@ -12,7 +12,8 @@ export default class Ball extends Objective {
     )
   }
 
-  init() {}
-
-  move() {}
+  setInfo() {
+    this.name = "Ball"
+    this.userData.isObject = true
+  }
 }

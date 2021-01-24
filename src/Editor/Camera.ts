@@ -7,7 +7,7 @@ const PI_2 = Math.PI / 2
 
 class camera extends THREE.PerspectiveCamera {
   moveSpeed = 1
-  rotateSpeed = 0.02
+  rotateSpeed = 10
   useForPanObj = new THREE.Object3D()
 
   raycaster = new THREE.Raycaster()
@@ -43,8 +43,8 @@ class camera extends THREE.PerspectiveCamera {
     const euler = new THREE.Euler(0, 0, 0, "YXZ")
     euler.setFromQuaternion(this.quaternion)
 
-    euler.y -= axis2D.x * this.rotateSpeed
-    euler.x -= axis2D.y * this.rotateSpeed
+    euler.y += axis2D.x * this.rotateSpeed
+    euler.x += axis2D.y * this.rotateSpeed
 
     euler.x = Math.max(
       PI_2 - maxPolarAngle,
@@ -77,7 +77,11 @@ class camera extends THREE.PerspectiveCamera {
   }
 
   getIntersectObject(object: THREE.Object3D) {
-    this.raycaster.intersectObject(object)
+    return this.raycaster.intersectObject(object)
+  }
+
+  getIntersectObjects(objects: THREE.Object3D[]) {
+    return this.raycaster.intersectObjects(objects)
   }
 }
 

@@ -6,6 +6,7 @@ import Plane from "./Object3D/Plane"
 
 export default class Scene extends THREE.Scene {
   objects: Array<Object3D | undefined> = []
+  plane: Plane | undefined
 
   createHelper() {
     this.add(new GridHelper(100, 100), new THREE.AxesHelper(10))
@@ -21,12 +22,12 @@ export default class Scene extends THREE.Scene {
   }
 
   genBasicObject(camera: THREE.Camera) {
-    const plane = new Plane()
+    this.plane = new Plane()
 
-    const cursor = new Cursor(camera, plane)
+    const cursor = new Cursor(camera, this.plane)
 
-    this.objects.push(cursor, plane)
+    this.objects.push(cursor, this.plane)
     if (Platform.OS === "web") this.add(cursor)
-    this.add(plane)
+    this.add(this.plane)
   }
 }

@@ -7,4 +7,4 @@ import App from "./src/App"
 
 registerRootComponent(App)
 
-debugContextDevtool(document.getElementById("root"), {})
+// debugContextDevtool(document.getElementById("root"), {})

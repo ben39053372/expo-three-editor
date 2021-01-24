@@ -1,10 +1,17 @@
 import React, { useRef } from "react"
-import { PanResponder, Platform, View, ViewProps } from "react-native"
+import {
+  PanResponder,
+  Platform,
+  useWindowDimensions,
+  View,
+  ViewProps
+} from "react-native"
 import WebGl from "@Canvas/WebGL"
 import oneFingerHandler from "./oneFingerMoveHandler"
 import cursorHandler from "./cusorHandler"
 import clickHanlder from "./clickHandler"
 import twoFingerMoveHandler from "./twoFingerHandler"
+import { THREE } from "expo-three"
 
 interface props extends ViewProps {
   children: React.ReactNode
@@ -16,9 +23,16 @@ interface touchPosition {
   id: string
 }
 
+export interface extraData {
+  touchStartPosition: touchPosition[] | undefined
+  intersects: THREE.Intersection[]
+}
+
 const GestureView = (props: props) => {
   let isPan: boolean = false
   let touchStartPosition = useRef<touchPosition[]>().current
+  let intersects = useRef<THREE.Intersection[]>([]).current
+  const { width, height } = useWindowDimensions()
 
   Platform.OS === "web" && cursorHandler(props.webGL)
 
@@ -31,7 +45,7 @@ const GestureView = (props: props) => {
       onShouldBlockNativeResponder: () => true,
 
       // on start
-      onPanResponderGrant: (evt) => {
+      onPanResponderGrant: (evt, gestureState) => {
         // isPan = false
         touchStartPosition = evt.nativeEvent.touches.map((touch) => {
           const touchPosition: touchPosition = {
@@ -41,14 +55,25 @@ const GestureView = (props: props) => {
           }
           return touchPosition
         })
-        console.log(touchStartPosition)
+        if (gestureState.numberActiveTouches === 1) {
+          props.webGL.camera.shootRaycaster({
+            x: (gestureState.x0 / width) * 2 - 1,
+            y: -(gestureState.y0 / height) * 2 + 1
+          })
+          intersects = props.webGL.camera.getIntersectObjects(
+            props.webGL.scene.children
+          )
+        }
       },
       // on Move
       onPanResponderMove: (evt, gestureState) => {
         if (!isPan && gestureState.dx > 10 && gestureState.dy > 10) isPan = true
         // one finger
         if (gestureState.numberActiveTouches === 1)
-          oneFingerHandler(gestureState, props.webGL)
+          oneFingerHandler(gestureState, props.webGL, {
+            touchStartPosition,
+            intersects
+          })
 
         // more than one finger
         if (gestureState.numberActiveTouches === 2) {
