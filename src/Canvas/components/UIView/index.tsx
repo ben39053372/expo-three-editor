@@ -1,5 +1,6 @@
 import WebGl from "@Canvas/WebGL"
-import React from "react"
+import React, { useContext } from "react"
+// eslint-disable-next-line no-unused-vars
 import { StyleSheet, View, Platform } from "react-native"
 import Button from "@Components/Button"
 import styles from "./style"
@@ -7,8 +8,8 @@ import DebugView from "./DebugView"
 import Ball from "@Editor/Object3D/Ball"
 import Typography from "@Components/Typography"
 import font from "@Style/font"
-import color from "@Style/color"
 import { useTranslation } from "react-i18next"
+// eslint-disable-next-line no-unused-vars
 import FPSStats from "react-fps-stats"
 
 export interface UIViewProps {
@@ -28,12 +29,10 @@ const UIView = (props: UIViewProps) => {
 
   return (
     <View style={[styles.UIView]}>
-      {Platform.OS === "web" && <FPSStats />}
+      {/* {Platform.OS === "web" && <FPSStats />} */}
       <View style={actionStyle.container}>
-        <Button onPress={addBall} color="secondary">
-          <Typography style={[font.body, { color: color.info }]}>
-            {t("add a ball")}
-          </Typography>
+        <Button onPress={addBall} color="primary">
+          <Typography style={font.body}>{t("add a ball")}</Typography>
         </Button>
       </View>
 
@@ -45,8 +44,7 @@ const UIView = (props: UIViewProps) => {
 
 const actionStyle = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    backgroundColor: color.primary
+    flexDirection: "row"
   }
 })
 

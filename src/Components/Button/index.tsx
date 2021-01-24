@@ -1,6 +1,5 @@
-import color from "@Style/color"
 import { padding } from "@Style/spacing"
-import React from "react"
+import React, { useContext } from "react"
 import {
   GestureResponderEvent,
   StyleProp,
@@ -8,22 +7,27 @@ import {
   TouchableHighlight,
   ViewStyle
 } from "react-native"
+import { ColorType, ThemeContext } from "../../theme"
 
 interface ButtonProp {
   children: React.ReactNode
   onPress: (event: GestureResponderEvent) => void
   style?: StyleProp<ViewStyle>
-  color?: keyof typeof color
+  color: ColorType
 }
 
 const Button = (props: ButtonProp) => {
+  const { theme } = useContext(ThemeContext)
   return (
     <TouchableHighlight
       style={[
         ButtonStyle.container,
         padding.xs,
         props.style,
-        { backgroundColor: color[props.color || "primary"] }
+        {
+          backgroundColor:
+            theme.color?.[props.color].main || theme.color?.[props.color]
+        }
       ]}
       onPress={props.onPress}
     >
@@ -35,7 +39,6 @@ const Button = (props: ButtonProp) => {
 const ButtonStyle = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: color.primary,
     borderRadius: 5
   }
 })
