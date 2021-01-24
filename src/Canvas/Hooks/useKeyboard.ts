@@ -6,7 +6,6 @@ const MS = 15
 const intervals: { [key: string]: NodeJS.Timeout | null } = {}
 
 const useKeyboard = () => {
-  console.log("useKeyboard")
   const keyDownEv = (e: KeyboardEvent) => {
     if (intervals[e.key]) return
     intervals[e.key] = setInterval(() => {

@@ -1,16 +1,22 @@
 import React from "react"
 import { StatusBar } from "expo-status-bar"
-import { Platform, StyleSheet, View } from "react-native"
-import FPSStats from "react-fps-stats"
+import "./i18n"
+import { StyleSheet, View } from "react-native"
 import Canvas from "./Canvas"
+import { Provider as ReduxProvider } from "react-redux"
+import store from "./store"
+import ThemeProvider from "./theme"
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {Platform.OS === "web" && <FPSStats />}
-      <Canvas />
-      <StatusBar style="auto" />
-    </View>
+    <ReduxProvider store={store}>
+      <ThemeProvider theme={{}}>
+        <View style={styles.container}>
+          <Canvas />
+          <StatusBar style="auto" />
+        </View>
+      </ThemeProvider>
+    </ReduxProvider>
   )
 }
 
