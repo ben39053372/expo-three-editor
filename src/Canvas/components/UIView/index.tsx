@@ -1,5 +1,5 @@
 import WebGl from "@Canvas/WebGL"
-import React, { useContext } from "react"
+import React from "react"
 // eslint-disable-next-line no-unused-vars
 import { StyleSheet, View, Platform } from "react-native"
 import Button from "@Components/Button"

@@ -13,7 +13,7 @@ interface ButtonProp {
   children: React.ReactNode
   onPress: (event: GestureResponderEvent) => void
   style?: StyleProp<ViewStyle>
-  color: ColorType
+  color?: ColorType
 }
 
 const Button = (props: ButtonProp) => {
@@ -22,11 +22,11 @@ const Button = (props: ButtonProp) => {
     <TouchableHighlight
       style={[
         ButtonStyle.container,
-        padding.xs,
-        props.style,
+        padding.sm,
         {
-          backgroundColor: theme.color?.[props.color].main
-        }
+          backgroundColor: theme.color?.[props.color || "primary"].main
+        },
+        props.style
       ]}
       onPress={props.onPress}
     >

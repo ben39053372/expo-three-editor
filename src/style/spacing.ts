@@ -2,36 +2,36 @@ import { StyleSheet } from "react-native"
 
 export const margin = StyleSheet.create({
   xs: {
-    margin: 2
-  },
-  sm: {
     margin: 4
   },
-  md: {
+  sm: {
     margin: 8
   },
-  lg: {
+  md: {
     margin: 16
   },
-  xl: {
+  lg: {
     margin: 32
+  },
+  xl: {
+    margin: 64
   }
 })
 
 export const padding = StyleSheet.create({
   xs: {
-    padding: 2
-  },
-  sm: {
     padding: 4
   },
-  md: {
+  sm: {
     padding: 8
   },
-  lg: {
+  md: {
     padding: 16
   },
-  xl: {
+  lg: {
     padding: 32
+  },
+  xl: {
+    padding: 64
   }
 })
