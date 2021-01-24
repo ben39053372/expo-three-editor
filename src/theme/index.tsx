@@ -19,10 +19,26 @@ export interface Colors {
     light: string
     dark: string
   }
-  error: string
-  warning: string
-  info: string
-  success: string
+  error: {
+    main: string
+    light: string
+    dark: string
+  }
+  warning: {
+    main: string
+    light: string
+    dark: string
+  }
+  info: {
+    main: string
+    light: string
+    dark: string
+  }
+  success: {
+    main: string
+    light: string
+    dark: string
+  }
 }
 
 export type ColorType = keyof Colors

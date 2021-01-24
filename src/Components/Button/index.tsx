@@ -25,8 +25,7 @@ const Button = (props: ButtonProp) => {
         padding.xs,
         props.style,
         {
-          backgroundColor:
-            theme.color?.[props.color].main || theme.color?.[props.color]
+          backgroundColor: theme.color?.[props.color].main
         }
       ]}
       onPress={props.onPress}
