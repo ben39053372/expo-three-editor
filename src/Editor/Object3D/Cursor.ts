@@ -1,4 +1,3 @@
-import eventManager from "@EventManager"
 import { THREE } from "expo-three"
 import Plane from "./Plane"
 
@@ -13,9 +12,6 @@ class Cursor extends THREE.Mesh {
     this.raycaster = new THREE.Raycaster()
     this.camera = camera
     this.plane = plane
-    eventManager.addListener("MOUSE_MOVE", (payload) => {
-      this.onMouseMove(payload?.mouse)
-    })
     this.init()
   }
 

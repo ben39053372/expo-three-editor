@@ -1,16 +1,12 @@
-import EventManager from "@EventManager"
 import { THREE } from "expo-three"
-import { GridHelper } from "three"
+import { Platform } from "react-native"
+import { GridHelper, Object3D } from "three"
 import Cursor from "./Object3D/Cursor"
 import Plane from "./Object3D/Plane"
 
 export default class Scene extends THREE.Scene {
-  constructor() {
-    super()
-    EventManager.addListener("WINDOW_RESIZE", () => {
-      console.log("resize")
-    })
-  }
+  objects: Array<Object3D | undefined> = []
+  plane: Plane | undefined
 
   createHelper() {
     this.add(new GridHelper(100, 100), new THREE.AxesHelper(10))
@@ -26,10 +22,12 @@ export default class Scene extends THREE.Scene {
   }
 
   genBasicObject(camera: THREE.Camera) {
-    const plane = new Plane()
+    this.plane = new Plane()
 
-    const cursor = new Cursor(camera, plane)
+    const cursor = new Cursor(camera, this.plane)
 
-    this.add(cursor, plane)
+    this.objects.push(cursor, this.plane)
+    if (Platform.OS === "web") this.add(cursor)
+    this.add(this.plane)
   }
 }

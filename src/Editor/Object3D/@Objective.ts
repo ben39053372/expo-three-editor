@@ -1,8 +1,7 @@
 import { THREE } from "expo-three"
 
-abstract class Objective {
-  abstract mountEvent(): void
-  abstract move(axis2D: THREE.Vector2, speed: number): void
+abstract class Objective extends THREE.Mesh {
+  abstract setInfo(): void
 }
 
 export default Objective

@@ -10,8 +10,8 @@ module.exports = function (api) {
             "@Editor": "./src/Editor",
             "@Canvas": "./src/Canvas",
             "@Components": "./src/Components",
-            "@EventManager": "./src/EventManager",
-            "@Style": "./src/Style"
+            "@Style": "./src/Style",
+            "@Theme": "./src/theme"
           }
         }
       ]

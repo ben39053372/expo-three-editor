@@ -1,6 +1,6 @@
 import { useWindowDimensions } from "react-native"
 
-const SCREEN_WIDTH = [600, 960, 1280, 1920]
+const SCREEN_WIDTH = [0, 600, 960, 1280, 1920]
 
 const BP_KEY = ["xs", "sm", "md", "lg", "xl"]
 

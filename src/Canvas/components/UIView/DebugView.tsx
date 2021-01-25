@@ -6,7 +6,6 @@ import { THREE } from "expo-three"
 import { UIViewProps } from "."
 import useUpdate from "./useUpdate"
 import Loading from "@Components/Loading"
-import eventManager from "@EventManager"
 
 const round = (float: number) => {
   return float.toFixed(2)
@@ -65,21 +64,6 @@ const CameraInfoView = (props: { camera: THREE.Camera }) => {
           props.camera.position.y
         )}, Z: ${round(props.camera.position.z)}`}
       </DebugFont>
-    </View>
-  )
-}
-
-const EventQuene = () => {
-  const logs = eventManager.logger.logs
-  return (
-    <View>
-      {logs.map((log, key) => {
-        return (
-          <View key={key}>
-            <DebugFont>{JSON.stringify(log, null, 2)}</DebugFont>
-          </View>
-        )
-      })}
     </View>
   )
 }

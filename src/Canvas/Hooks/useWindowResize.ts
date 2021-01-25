@@ -1,15 +1,11 @@
-import EventManager from "@EventManager"
+import WebGL from "@Canvas/WebGL"
 import { useEffect } from "react"
 import { useWindowDimensions } from "react-native"
 
-const useWindowResize = () => {
+const useWindowResize = (webGl: WebGL) => {
   const { height, width, scale } = useWindowDimensions()
   useEffect(() => {
-    EventManager.emit("WINDOW_RESIZE", {
-      height,
-      width,
-      scale
-    })
+    webGl.onWindowResize(width, height, scale)
   }, [height, width, scale])
 }
 
