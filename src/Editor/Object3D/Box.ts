@@ -23,8 +23,6 @@ class Box extends Objective {
       (Math.random() - 0.5) * 20
     )
   }
-
-  move() {}
 }
 
 export default Box

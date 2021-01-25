@@ -2,8 +2,7 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
   UIView: {
-    flex: 1,
-    flexDirection: "row"
+    flex: 1
   },
   dodgeStats: {
     marginLeft: 80
@@ -15,6 +14,12 @@ const styles = StyleSheet.create({
   },
   canvas: {
     flex: 1
+  }
+})
+
+export const actionStyle = StyleSheet.create({
+  container: {
+    flexDirection: "row"
   }
 })
 

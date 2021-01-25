@@ -1,7 +1,11 @@
 import Cursor from "./Cursor"
 import Plane from "./Plane"
+import Ball from "./Ball"
+import Box from "./Box"
 
-export default {
+module.exports = {
   Cursor,
-  Plane
+  Plane,
+  Ball,
+  Box
 }

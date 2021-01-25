@@ -6,8 +6,12 @@ class Cursor extends THREE.Mesh {
   camera: THREE.Camera
   plane: Plane
   constructor(camera: THREE.Camera, plane: Plane) {
-    const geometry = new THREE.ConeGeometry(0.2, 1, 10)
-    const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+    const geometry = new THREE.ConeGeometry(0.1, 0.5, 5)
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xffff00,
+      opacity: 0.3,
+      transparent: true
+    })
     super(geometry, material)
     this.rayCaster = new THREE.Raycaster()
     this.camera = camera

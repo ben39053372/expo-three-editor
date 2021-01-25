@@ -84,6 +84,8 @@ const GestureView = (props: props) => {
         if (gestureState.dx < 10 && gestureState.dy < 10) {
           clickHanlder(gestureState)
         }
+        touchStartPosition = []
+        intersects = []
       },
       onPanResponderTerminationRequest: () => false
     })

@@ -1,6 +1,5 @@
 import { PanResponderGestureState, Dimensions } from "react-native"
 import WebGl from "@Canvas/WebGL"
-import { Scene, Vector2 } from "three"
 import { extraData } from "."
 import { THREE } from "expo-three"
 
@@ -9,26 +8,24 @@ const oneFingerMoveHandler = (
   webgl: WebGl,
   extraData: extraData
 ) => {
-  const { width, height } = Dimensions.get("screen")
+  const { width, height } = Dimensions.get("window")
   const targetObject = extraData.intersects.filter(
     (intersect) => intersect.object.userData.isObject === true
   )[0]?.object
 
   if (targetObject) {
     webgl.camera.shootRaycaster({
-      x: (gestureState.x0 / width) * 2 - 1,
-      y: -(gestureState.y0 / height) * 2 + 1
+      x: (gestureState.moveX / width) * 2 - 1,
+      y: -(gestureState.moveY / height) * 2 + 1
     })
-    const moveTo = webgl.camera.getIntersectObject(
+    const intersects = webgl.camera.getIntersectObject(
       (webgl.scene.plane as THREE.Object3D) || webgl.scene.children
-    )[0].point
-
-    console.log(moveTo)
-
-    targetObject.position.set(moveTo.x, moveTo.y, moveTo.z)
+    )
+    const moveTo = intersects[0].point
+    targetObject.position.set(moveTo.x, 0, moveTo.z)
   } else {
     webgl.camera.rotateByAxis2D(
-      new Vector2(gestureState.vx / width, gestureState.vy / height)
+      new THREE.Vector2(gestureState.vx / width, gestureState.vy / height)
     )
   }
 }

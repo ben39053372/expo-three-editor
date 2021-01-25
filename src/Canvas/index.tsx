@@ -8,6 +8,10 @@ import useKeyboard from "./Hooks/useKeyboard"
 
 export const webGLInstance = new WebGL()
 
+export interface webGLProp {
+  webGL: WebGL
+}
+
 const Canvas = () => {
   const webGL = useRef<WebGL>(webGLInstance).current
 
