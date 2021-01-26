@@ -21,8 +21,10 @@ const oneFingerMoveHandler = (
     const intersects = webgl.camera.getIntersectObject(
       (webgl.scene.plane as THREE.Object3D) || webgl.scene.children
     )
-    const moveTo = intersects[0].point
-    targetObject.position.set(moveTo.x, 0, moveTo.z)
+    if (intersects[0]) {
+      const moveTo = intersects[0]?.point
+      targetObject.position.set(moveTo.x, 0, moveTo.z)
+    }
   } else {
     webgl.camera.rotateByAxis2D(
       new THREE.Vector2(gestureState.vx / width, gestureState.vy / height)
