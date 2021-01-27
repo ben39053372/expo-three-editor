@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import {
+  Dimensions,
   PanResponder,
   Platform,
   useWindowDimensions,
@@ -32,7 +33,6 @@ const GestureView = (props: props) => {
   let isPan: boolean = false
   let touchStartPosition = useRef<touchPosition[]>().current
   let intersects = useRef<THREE.Intersection[]>([]).current
-  const { width, height } = useWindowDimensions()
 
   Platform.OS === "web" && cursorHandler(props.webGL)
 
@@ -56,9 +56,10 @@ const GestureView = (props: props) => {
           return touchPosition
         })
         if (gestureState.numberActiveTouches === 1) {
+          const dimensions = Dimensions.get("window")
           props.webGL.camera.shootRaycaster({
-            x: (gestureState.x0 / width) * 2 - 1,
-            y: -(gestureState.y0 / height) * 2 + 1
+            x: (gestureState.x0 / dimensions.width) * 2 - 1,
+            y: -(gestureState.y0 / dimensions.height) * 2 + 1
           })
           intersects = props.webGL.camera.getIntersectObjects(
             props.webGL.scene.children
