@@ -27,7 +27,7 @@ const DebugView = (props: UIViewProps) => {
   const scene = webGL.scene
 
   return (
-    <ScrollView
+    <View
       nativeID="scrollView"
       pointerEvents="none"
       style={{
@@ -35,9 +35,9 @@ const DebugView = (props: UIViewProps) => {
         position: "absolute",
         width: "100%",
         height: "100%",
-        zIndex: 2
+        zIndex: 2,
+        overflow: "scroll"
       }}
-      contentContainerStyle={{ flex: 1 }}
     >
       {webGL.camera && webGL.scene ? (
         <View nativeID="dataView" style={[styles.dodgeStats, styles.horizList]}>
@@ -48,7 +48,7 @@ const DebugView = (props: UIViewProps) => {
       ) : (
         <Loading isLoading={true} />
       )}
-    </ScrollView>
+    </View>
   )
 }
 
