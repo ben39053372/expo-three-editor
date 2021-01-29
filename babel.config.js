@@ -11,7 +11,7 @@ module.exports = function (api) {
             "@Editor": "./src/Editor",
             "@Canvas": "./src/Canvas",
             "@Components": "./src/Components",
-            "@Style": "./src/Style",
+            "@Style": "./src/style",
             "@Theme": "./src/theme",
             "@Utils": "./src/utils"
           }
