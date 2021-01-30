@@ -1,6 +1,6 @@
 import { DebugFont } from "@Components/Typography"
 import React from "react"
-import { ScrollView, View } from "react-native"
+import { View } from "react-native"
 import styles from "./style"
 import { THREE } from "expo-three"
 import { UIViewProps } from "."
@@ -28,15 +28,13 @@ const DebugView = (props: UIViewProps) => {
 
   return (
     <View
-      nativeID="scrollView"
       pointerEvents="none"
       style={{
         backgroundColor: "rgba(0,0,0,0)",
         position: "absolute",
         width: "100%",
         height: "100%",
-        zIndex: 2,
-        overflow: "scroll"
+        zIndex: 2
       }}
     >
       {webGL.camera && webGL.scene ? (

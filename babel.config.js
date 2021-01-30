@@ -6,7 +6,7 @@ module.exports = function (api) {
       [
         "module-resolver",
         {
-          root: ["./src"],
+          // root: ["./src"],
           alias: {
             "@Editor": "./src/Editor",
             "@Canvas": "./src/Canvas",
