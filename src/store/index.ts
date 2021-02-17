@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit"
 import logger from "redux-logger"
-import counter from "./count"
+import counterReducer from "./count"
+import appStateReducer from "./appState"
 
 const reducer = {
-  counter
+  counterReducer,
+  appStateReducer
 }
 
-const store = configureStore({
+export default configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== "production"
 })
-
-export default store
