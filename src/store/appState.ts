@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export interface CounterState {
+export interface AppState {
   value: number
 }
 
-const initialState: CounterState = {
+const initialState: AppState = {
   value: 0
 }
 
-const countSlice = createSlice({
+const AppStateSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
@@ -24,6 +24,6 @@ const countSlice = createSlice({
   }
 })
 
-export const { add, sub } = countSlice.actions
+export const { add, sub } = AppStateSlice.actions
 
-export default countSlice.reducer
+export default AppStateSlice.reducer

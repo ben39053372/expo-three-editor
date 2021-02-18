@@ -1,7 +1,7 @@
 import React from "react"
 import { StatusBar } from "expo-status-bar"
 import "./i18n"
-import { StyleSheet, View } from "react-native"
+import { SafeAreaView, StyleSheet, View } from "react-native"
 import Canvas from "./Canvas"
 import { Provider as ReduxProvider } from "react-redux"
 import store from "./store"
@@ -12,10 +12,10 @@ export default function App() {
   return (
     <ReduxProvider store={store}>
       <ThemeProvider themes={themes}>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Canvas />
           <StatusBar style="auto" />
-        </View>
+        </SafeAreaView>
       </ThemeProvider>
     </ReduxProvider>
   )
