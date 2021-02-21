@@ -1,6 +1,21 @@
 import { THREE } from "expo-three"
 
-abstract class Objective extends THREE.Mesh {
+abstract class ObjectBase extends THREE.Group {
+  constructor(mesh?: THREE.Mesh) {
+    super()
+    this.name = "ObjectBase"
+    if (mesh) this.add(mesh)
+    this.traverse((obj) => (obj.userData.isObject = true))
+  }
+
+  add(...object: THREE.Object3D[]) {
+    object.forEach((obj, i) => {
+      console.log(i, obj)
+      obj.userData.isObject = true
+    })
+    return super.add(...object)
+  }
+
   create() {
     console.info(`created: ${this.uuid}, ${this.name}`)
   }
@@ -18,4 +33,4 @@ abstract class Objective extends THREE.Mesh {
   }
 }
 
-export default Objective
+export default ObjectBase

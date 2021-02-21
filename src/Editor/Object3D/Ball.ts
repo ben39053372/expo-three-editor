@@ -1,14 +1,17 @@
-import Objective from "./ObjectBase"
+import ObjectBase from "./ObjectBase"
 import { THREE } from "expo-three"
+import { Mesh } from "three"
 
-export default class Ball extends Objective {
+export default class Ball extends ObjectBase {
   constructor(
     size: number = 1.5,
     parameters?: THREE.MeshPhysicalMaterialParameters
   ) {
     super(
-      new THREE.SphereBufferGeometry(size, 32, 32),
-      new THREE.MeshPhysicalMaterial(parameters || {})
+      new Mesh(
+        new THREE.SphereBufferGeometry(size, 32, 32),
+        new THREE.MeshPhysicalMaterial(parameters || {})
+      )
     )
   }
 }
