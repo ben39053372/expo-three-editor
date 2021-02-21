@@ -7,7 +7,7 @@ const PI_2 = Math.PI / 2
 
 class camera extends THREE.PerspectiveCamera {
   moveSpeed = 1
-  rotateSpeed = 10
+  rotateSpeed = 0.5
   useForPanObj = new THREE.Object3D()
 
   raycaster = new THREE.Raycaster()
@@ -17,7 +17,8 @@ class camera extends THREE.PerspectiveCamera {
   }
 
   init() {
-    this.position.set(0, 20, 20)
+    this.up.set(0, 1, 0)
+    this.position.set(0, 80, 80)
     this.lookAt(0, 0, 0)
     this.attach(this.useForPanObj)
   }
@@ -77,11 +78,15 @@ class camera extends THREE.PerspectiveCamera {
   }
 
   getIntersectObject(object: THREE.Object3D) {
-    return this.raycaster.intersectObject(object)
+    const result = this.raycaster.intersectObject(object)
+    // console.log({ result })
+    return result
   }
 
   getIntersectObjects(objects: THREE.Object3D[]) {
-    return this.raycaster.intersectObjects(objects)
+    const result = this.raycaster.intersectObjects(objects, true)
+    // console.log(result)
+    return result
   }
 }
 
