@@ -20,6 +20,9 @@ module.exports = {
     quotes: ["error", "double"],
     "class-methods-use-this": [1],
     "prettier/prettier": "error",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    camelcase: "off"
   }
 }
