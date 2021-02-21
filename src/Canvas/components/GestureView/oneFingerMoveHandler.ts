@@ -28,8 +28,8 @@ const oneFingerMoveHandler = (
   } else {
     webgl.camera.rotateByAxis2D(
       new THREE.Vector2(
-        (gestureState.vx / width) * 100,
-        (gestureState.vy / height) * 100
+        (gestureState.vx / width) * 100 * 0.2,
+        (gestureState.vy / height) * 100 * 0.2
       )
     )
   }
