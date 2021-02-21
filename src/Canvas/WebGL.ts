@@ -1,4 +1,5 @@
 import { ExpoWebGLRenderingContext } from "expo-gl"
+import { THREE } from "expo-three"
 import Camera from "@Editor/Camera"
 import Renderer from "@Editor/Renderer"
 import Scene from "@Editor/Scene"
@@ -10,8 +11,10 @@ export default class WebGl {
   renderer!: Renderer
   camera!: Camera
   scene!: Scene
+  jsonData: BlueprintJSON | undefined
 
   public onGLContextCreate(gl: ExpoWebGLRenderingContext) {
+    THREE.Object3D.DefaultUp.set(0, 0, 1)
     this.initScene()
     this.initCamera(gl)
     this.initRenderer(gl)
@@ -64,5 +67,6 @@ export default class WebGl {
     this.scene = scene
     this.scene.createEnv()
     this.scene.createHelper()
+    if (this.jsonData) this.scene.applyJSONData(this.jsonData)
   }
 }

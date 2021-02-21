@@ -61,9 +61,11 @@ const GestureView = (props: props) => {
             x: (gestureState.x0 / dimensions.width) * 2 - 1,
             y: -(gestureState.y0 / dimensions.height) * 2 + 1
           })
+          console.log(props.webGL.scene.children)
           intersects = props.webGL.camera.getIntersectObjects(
             props.webGL.scene.children
           )
+          console.log(intersects.filter((i) => i.object.type === "Group"))
         }
       },
       // on Move

@@ -2,7 +2,6 @@ import { webGLProp } from "@Canvas/index"
 import Button from "@Components/Button"
 import Typography from "@Components/Typography"
 import Ball from "@Editor/Object3D/Ball"
-import Box from "@Editor/Object3D/Box"
 import font from "@Style/font"
 import { padding } from "@Style/spacing"
 import { ThemeContext } from "@Theme/index"
@@ -25,17 +24,9 @@ export default function ActionView(props: ActionViewProps) {
       metalness: 0,
       emissive: "#000"
     })
-    ball.setInfo()
     props.webGL.scene.add(ball)
   }
 
-  const addBox = () => {
-    const box = new Box(5, 5, 5, {
-      color: new THREE.Color(Math.random(), Math.random(), Math.random())
-    })
-    box.setInfo()
-    props.webGL.scene.add(box)
-  }
   return (
     <View
       style={[
@@ -46,9 +37,6 @@ export default function ActionView(props: ActionViewProps) {
     >
       <Button onPress={addBall} color="secondary">
         <Typography style={font.body}>{t("add a ball")}</Typography>
-      </Button>
-      <Button onPress={addBox} color="secondary">
-        <Typography style={font.body}>{t("add a box")}</Typography>
       </Button>
     </View>
   )

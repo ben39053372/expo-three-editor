@@ -12,8 +12,13 @@ export interface webGLProp {
   webGL: WebGL
 }
 
-const Canvas = () => {
+export interface CanvasProps {
+  jsonData?: object | undefined
+}
+
+const Canvas = (props: CanvasProps) => {
   const webGL = useRef<WebGL>(webGLInstance).current
+  webGL.jsonData = props.jsonData as BlueprintJSON
 
   useWindowResize(webGL)
   useKeyboard(webGL)

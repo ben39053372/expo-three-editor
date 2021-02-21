@@ -27,7 +27,10 @@ const oneFingerMoveHandler = (
     }
   } else {
     webgl.camera.rotateByAxis2D(
-      new THREE.Vector2(gestureState.vx / width, gestureState.vy / height)
+      new THREE.Vector2(
+        (gestureState.vx / width) * 100,
+        (gestureState.vy / height) * 100
+      )
     )
   }
 }

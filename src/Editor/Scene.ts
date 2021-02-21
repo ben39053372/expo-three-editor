@@ -2,6 +2,7 @@ import { THREE } from "expo-three"
 import { Platform } from "react-native"
 import { GridHelper, Object3D } from "three"
 import Cursor from "./Object3D/Cursor"
+import Model from "./Object3D/Model"
 import Plane from "./Object3D/Plane"
 
 export default class Scene extends THREE.Scene {
@@ -13,6 +14,8 @@ export default class Scene extends THREE.Scene {
   }
 
   createEnv() {
+    // this.up.set(0, 1, 0)
+    this.scale.set(1, 1, 1)
     this.background = new THREE.Color(0x777777)
     this.fog = new THREE.FogExp2(0xffffff, 0.00015)
 
@@ -37,5 +40,20 @@ export default class Scene extends THREE.Scene {
     this.objects.push(cursor, this.plane)
     if (Platform.OS === "web") this.add(cursor)
     this.add(this.plane)
+  }
+
+  async applyJSONData(json: BlueprintJSON) {
+    console.log(this)
+    console.log(json)
+    const allFurniture = json.Save_Furniture.filter(
+      (f) => !["9000", "9002", "9003"].includes(f.ID.toString())
+    )
+    const furnitures = allFurniture.map(async (furniture) => {
+      const model = new Model(furniture)
+      const loadedModel = await model.create()
+      if (loadedModel) this.add(loadedModel)
+    })
+    // furnitures.forEach((f) => f.create())
+    console.log("All model: ", furnitures)
   }
 }
