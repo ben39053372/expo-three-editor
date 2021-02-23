@@ -17,9 +17,14 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto"
+      }
+    ],
     quotes: ["error", "double"],
     "class-methods-use-this": [1],
-    "prettier/prettier": "error",
     "no-use-before-define": "off",
     "no-undef": "off",
     "no-unused-vars": "off",

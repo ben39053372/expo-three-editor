@@ -3,7 +3,6 @@ import {
   Dimensions,
   PanResponder,
   Platform,
-  useWindowDimensions,
   View,
   ViewProps
 } from "react-native"

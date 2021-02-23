@@ -1,5 +1,4 @@
 import { THREE } from "expo-three"
-
 class Plane extends THREE.Mesh {
   constructor() {
     const geometry = new THREE.PlaneBufferGeometry(
