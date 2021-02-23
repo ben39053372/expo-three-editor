@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const UPDATE_TIMING = 60
+const UPDATE_TIMING = 500
 
 /**
  * A black magic to help UI component get updated ref data

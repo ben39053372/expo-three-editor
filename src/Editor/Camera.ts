@@ -1,5 +1,4 @@
 import { THREE } from "expo-three"
-import { Euler } from "three"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
@@ -60,7 +59,9 @@ class camera extends THREE.PerspectiveCamera {
       this.position.y,
       this.position.z
     )
-    this.useForPanObj.setRotationFromEuler(new Euler(0, this.rotation.y, 0))
+    this.useForPanObj.setRotationFromEuler(
+      new THREE.Euler(0, this.rotation.y, 0)
+    )
     this.useForPanObj.translateOnAxis(
       new THREE.Vector3(axis2D.x, 0, -axis2D.y),
       speed

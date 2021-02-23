@@ -8,8 +8,8 @@ import {
 } from "react-native"
 import WebGl from "@Canvas/WebGL"
 import oneFingerHandler from "./oneFingerMoveHandler"
-import cursorHandler from "./cusorHandler"
-import clickHanlder from "./clickHandler"
+import cursorHandler from "./cursorHandler"
+import clickHandler from "./clickHandler"
 import twoFingerMoveHandler from "./twoFingerHandler"
 import { THREE } from "expo-three"
 
@@ -88,7 +88,7 @@ const GestureView = (props: props) => {
       },
       onPanResponderEnd: (evt, gestureState) => {
         if (gestureState.dx < 10 && gestureState.dy < 10) {
-          clickHanlder(gestureState)
+          clickHandler(gestureState)
         }
         touchStartPosition = []
         intersects = []

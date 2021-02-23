@@ -38,10 +38,12 @@ const DebugView = (props: UIViewProps) => {
       }}
     >
       {webGL.camera && webGL.scene ? (
-        <View nativeID="dataView" style={[styles.dodgeStats, styles.horizList]}>
+        <View
+          nativeID="dataView"
+          style={[styles.dodgeStats, styles.horizonList]}
+        >
           <CameraInfoView camera={camera} />
           <SceneObjectView scene={scene} />
-          {/* <EventQuene /> */}
         </View>
       ) : (
         <Loading isLoading={true} />

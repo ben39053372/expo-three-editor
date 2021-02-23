@@ -15,7 +15,15 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "compile-hero.disable-compile-files-on-did-save-code": true,
-  "cSpell.words": ["Raycaster"],
+  "cSpell.words": [
+    "JSONDATA",
+    "Marinella",
+    "Raycaster",
+    "Tranform",
+    "clearcoat",
+    "furnitures",
+    "metalness"
+  ],
   "eslint.format.enable": true,
   "prettier.endOfLine": "auto"
 }

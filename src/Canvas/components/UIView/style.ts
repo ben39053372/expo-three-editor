@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   dodgeStats: {
     marginLeft: 80
   },
-  horizList: {
+  horizonList: {
     backgroundColor: "rgba(0,0,0,0)",
     flexDirection: "row",
     justifyContent: "space-between"

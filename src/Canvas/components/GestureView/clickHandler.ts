@@ -6,7 +6,7 @@ let isClickTimeout: NodeJS.Timeout
 
 const CLICK_TIMEOUT_MS = 350
 
-const clickHanlder = (gestureState: PanResponderGestureState) => {
+const clickHandler = (gestureState: PanResponderGestureState) => {
   if (isClicked) {
     // double click
     isClicked = false
@@ -20,4 +20,4 @@ const clickHanlder = (gestureState: PanResponderGestureState) => {
   }
 }
 
-export default clickHanlder
+export default clickHandler

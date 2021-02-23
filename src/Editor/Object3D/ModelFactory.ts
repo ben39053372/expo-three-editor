@@ -33,7 +33,7 @@ export default class ModelFactory {
       console.log(modelJSON.files.materialStyles)
       const defaultStyle = modelJSON.files.materialStyles[0].materials[0]
       if (!defaultStyle) return
-      // albelo map
+      // albedo map
       if (defaultStyle.images.albedo[SIZE] !== undefined)
         material.map = await ExpoTHREE.loadAsync(
           defaultStyle.images.albedo[SIZE]
