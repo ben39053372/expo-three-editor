@@ -63,12 +63,6 @@ const GestureView = (props: props) => {
           intersects = props.webGL.camera.getIntersectObjects(
             props.webGL.scene.children
           )
-          console.log({
-            intersects:
-              intersects[0].object.type === "Mesh"
-                ? intersects[0].object.parent
-                : intersects[0].object
-          })
         }
       },
       // on Move
