@@ -70,10 +70,10 @@ export default class ModelFactory {
       const AngleRadians = degree2Radians(Angle)
       console.log(Angle, AngleRadians)
       model.setRotationFromEuler(
-        new THREE.Euler(AngleRadians.X, AngleRadians.Y, AngleRadians.Z)
+        new THREE.Euler(AngleRadians.X, -AngleRadians.Y, AngleRadians.Z)
       )
       // set Scale
-      model.scale.set(Scale.X * 0.1, Scale.Y * 0.1, -Scale.Z * 0.1)
+      model.scale.set(Scale.X * 0.1, Scale.Y * 0.1, Scale.Z * 0.1)
       // super.create()
       const helper = new THREE.BoxHelper(model, 0xffff00)
       const group = new Model()
