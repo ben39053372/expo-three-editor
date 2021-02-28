@@ -64,7 +64,10 @@ interface MaterialJSONImagesFile {
 }
 
 interface ModelMaterialJSON {
+  colorable: boolean
   images: MaterialTypeJSON
+  name: string
+  _id: string
 }
 
 interface MaterialTypeJSON {

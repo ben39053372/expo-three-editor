@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import { actionStyle } from "./style"
 import { THREE } from "expo-three"
+import { saveAs } from "file-saver"
 
 interface ActionViewProps extends webGLProp {}
 
@@ -39,6 +40,16 @@ export default function ActionView(props: ActionViewProps) {
     props.webGL.scene.add(wall)
   }
 
+  const importData = () => {}
+
+  const exportData = () => {
+    const data = JSON.stringify(props.webGL.scene.toJSON())
+    const jsonFile = new Blob([data], {
+      type: "application/json"
+    })
+    saveAs(jsonFile, "scene.json")
+  }
+
   return (
     <View
       style={[
@@ -52,6 +63,12 @@ export default function ActionView(props: ActionViewProps) {
       </Button>
       <Button onPress={addWall} color="secondary">
         <Typography style={font.body}>{t("add a Wall")}</Typography>
+      </Button>
+      <Button onPress={importData} color="secondary">
+        <Typography style={font.body}>{t("import")}</Typography>
+      </Button>
+      <Button onPress={exportData} color="secondary">
+        <Typography style={font.body}>{t("export")}</Typography>
       </Button>
     </View>
   )

@@ -22,45 +22,50 @@ export default class ModelFactory {
 
       const model: THREE.Group = await ExpoTHREE.loadAsync(
         modelJSON.files.fbx.url
-      )
+      ).catch((err) => {
+        throw new Error(data.Name + err)
+      })
+
       model.userData = {
         blueprintJSON: data,
         modelJSON,
-        isObject: true
+        isObject: true,
+        materialSets: data.m_MaterialSet
       }
-      console.log(model.userData)
-      const material = new THREE.MeshStandardMaterial()
-      console.log(modelJSON.files.materialStyles)
-      const defaultStyle = modelJSON.files.materialStyles[0].materials[0]
-      if (!defaultStyle) return
-      // albedo map
-      if (defaultStyle.images.albedo[SIZE] !== undefined)
-        material.map = await ExpoTHREE.loadAsync(
-          defaultStyle.images.albedo[SIZE]
-        )
-      // normal map
-      if (defaultStyle.images.normal[SIZE])
-        material.normalMap = await ExpoTHREE.loadAsync(
-          defaultStyle.images.normal[SIZE]
-        )
-      // metallic map
-      if (defaultStyle.images.metallic[SIZE])
-        material.metalnessMap = await ExpoTHREE.loadAsync(
-          defaultStyle.images.metallic[SIZE]
-        )
-      // ambient map
-      if (defaultStyle.images.ambient[SIZE])
-        material.aoMap = await ExpoTHREE.loadAsync(
-          defaultStyle.images.ambient[SIZE]
-        )
-      let i = 0
-      model.traverse((obj) => {
-        if (obj instanceof THREE.Mesh) {
-          i++
-          console.log(i, obj)
+
+      // model.material = material
+      const materials = await extractMaterial(modelJSON)
+
+      model.children.forEach((obj3d, index) => {
+        if (obj3d instanceof THREE.Mesh) {
+          const mesh: THREE.Mesh = obj3d
+          if (mesh.children.length > 0) {
+            // console.log({ mesh })
+          } else {
+            if (materials.length > 0) {
+              if (mesh.name === "FM_406")
+                console.log(mesh, materials, data.m_MaterialSet)
+              if (mesh.material instanceof Array) {
+                mesh.material = materials.map((material) => {
+                  const mat = material.material
+                  mat.name = material.name
+                  const color = data.m_MaterialSet[index].MaterialColor
+                  mat.color = new THREE.Color(
+                    `rgb(${(color.R * 255).toFixed(0)},${(
+                      color.G * 255
+                    ).toFixed(0)},${(color.B * 255).toFixed(0)})`
+                  )
+                  console.log(mat.color)
+                  return mat
+                })
+              } else {
+                mesh.material = materials[index].material
+              }
+            }
+          }
+          ;(mesh.material as THREE.MeshStandardMaterial).needsUpdate = true
         }
       })
-      // model.material = material
 
       const { Position, Angle, Scale } = data.m_Tranform
       // set Position
@@ -68,7 +73,6 @@ export default class ModelFactory {
       model.position.set(-Position.X * 10, Position.Y * 10, Position.Z * 10)
       // set Rotation
       const AngleRadians = degree2Radians(Angle)
-      console.log(Angle, AngleRadians)
       model.setRotationFromEuler(
         new THREE.Euler(AngleRadians.X, AngleRadians.Y, AngleRadians.Z)
       )
@@ -79,7 +83,6 @@ export default class ModelFactory {
       const group = new Model()
       group.add(model)
       group.name = data.Name
-      // group.up.set(0, 0, 1)
 
       return group
     } catch (error) {
@@ -95,4 +98,58 @@ function degree2Radians(degree: Vector3D) {
     Z: degree.Z > 1 ? (degree.Z * Math.PI) / 180 : 0
   }
   return result
+}
+
+async function extractMaterial(modelJSON: ModelJSON) {
+  const materials = modelJSON.files.materialStyles[0].materials
+  const materialSet = await Promise.all(
+    materials.map(async (data) => {
+      const material = new THREE.MeshStandardMaterial({
+        map: data.images.albedo[SIZE]
+          ? await ExpoTHREE.loadAsync(data.images.albedo[SIZE])
+          : null,
+        normalMap: data.images.normal[SIZE]
+          ? await ExpoTHREE.loadAsync(data.images.normal[SIZE])
+          : null,
+        metalnessMap: data.images.metallic[SIZE]
+          ? await ExpoTHREE.loadAsync(data.images.metallic[SIZE])
+          : null,
+        aoMap: data.images.ambient[SIZE]
+          ? await ExpoTHREE.loadAsync(data.images.ambient[SIZE])
+          : null
+      })
+      return {
+        id: data._id,
+        name: data.name,
+        material,
+        data: materials
+      }
+    })
+  )
+  return materialSet
+}
+
+async function createMaterial(json: ModelJSON) {
+  const material = new THREE.MeshStandardMaterial()
+  console.log(json.files.materialStyles)
+  const defaultStyle = json.files.materialStyles[0].materials[0]
+  if (!defaultStyle) return
+  // albedo map
+  if (defaultStyle.images.albedo?.[SIZE] !== undefined)
+    material.map = await ExpoTHREE.loadAsync(defaultStyle.images.albedo[SIZE])
+  // normal map
+  if (defaultStyle.images.normal?.[SIZE])
+    material.normalMap = await ExpoTHREE.loadAsync(
+      defaultStyle.images.normal?.[SIZE]
+    )
+  // metallic map
+  if (defaultStyle.images.metallic?.[SIZE])
+    material.metalnessMap = await ExpoTHREE.loadAsync(
+      defaultStyle.images.metallic[SIZE]
+    )
+  // ambient map
+  if (defaultStyle.images.ambient?.[SIZE])
+    material.aoMap = await ExpoTHREE.loadAsync(
+      defaultStyle.images.ambient?.[SIZE]
+    )
 }

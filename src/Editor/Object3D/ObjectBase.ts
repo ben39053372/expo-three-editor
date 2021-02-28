@@ -10,7 +10,6 @@ abstract class ObjectBase extends THREE.Group {
 
   add(...object: THREE.Object3D[]) {
     object.forEach((obj, i) => {
-      console.log(i, obj)
       obj.userData.isObject = true
     })
     return super.add(...object)
