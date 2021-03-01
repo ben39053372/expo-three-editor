@@ -23,7 +23,7 @@ const oneFingerMoveHandler = (
     )
     if (intersects[0]) {
       const moveTo = intersects[0]?.point
-      targetObject.position.set(moveTo.x, 0, moveTo.z)
+      targetObject.parent?.position.set(moveTo.x, 0, moveTo.z)
     }
   } else {
     webgl.camera.rotateByAxis2D(

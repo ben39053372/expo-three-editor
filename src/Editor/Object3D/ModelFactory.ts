@@ -28,9 +28,7 @@ export default class ModelFactory {
         modelJSON,
         isObject: true
       }
-      console.log(model.userData)
       const material = new THREE.MeshStandardMaterial()
-      console.log(modelJSON.files.materialStyles)
       const defaultStyle = modelJSON.files.materialStyles[0].materials[0]
       if (!defaultStyle) return
       // albedo map

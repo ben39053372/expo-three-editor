@@ -19,6 +19,8 @@ export default class Wall extends ObjectBase {
         new THREE.MeshPhysicalMaterial(parameters || {})
       )
     )
+    this.userData.name = "Wall"
+    console.log("wall ", this.visible, super.visible)
     const hole = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1))
   }
 }

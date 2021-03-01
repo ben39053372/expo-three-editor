@@ -1,6 +1,6 @@
 import { THREE } from "expo-three"
 import { Platform } from "react-native"
-import { GridHelper, Object3D } from "three"
+import { GridHelper, Object3D, Vector3 } from "three"
 import Cursor from "./Object3D/Cursor"
 import ModelFactory from "./Object3D/ModelFactory"
 import Plane from "./Object3D/Plane"
@@ -50,6 +50,7 @@ export default class Scene extends THREE.Scene {
     const furnitures = allFurniture.map(async (furniture) => {
       const loadedModel = await modelFactory.create(furniture)
       if (loadedModel) this.add(loadedModel)
+      return loadedModel
     })
     // furnitures.forEach((f) => f.create())
     console.log("All model: ", furnitures)
