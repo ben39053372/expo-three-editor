@@ -14,7 +14,7 @@ export default class WebGl {
   jsonData: BlueprintJSON | undefined
 
   public onGLContextCreate(gl: ExpoWebGLRenderingContext) {
-    THREE.Object3D.DefaultUp.set(0, 0, 1)
+    // THREE.Object3D.DefaultUp.set(0, 0, 1)
     this.initScene()
     this.initCamera(gl)
     this.initRenderer(gl)

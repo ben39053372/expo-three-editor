@@ -17,7 +17,7 @@ class camera extends THREE.PerspectiveCamera {
 
   init() {
     this.up.set(0, 1, 0)
-    this.position.set(0, 80, 80)
+    this.position.set(0, 80, -80)
     this.lookAt(0, 0, 0)
     this.attach(this.useForPanObj)
   }
