@@ -1,11 +1,12 @@
 import { THREE } from "expo-three"
+import Camera from "./Camera"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
 const PI_2 = Math.PI / 2
 
-class camera extends THREE.PerspectiveCamera {
-  moveSpeed = 1
+class PCamera extends THREE.PerspectiveCamera implements Camera {
+  movementSpeed = 1
   rotateSpeed = 0.4
   useForPanObj = new THREE.Object3D()
 
@@ -26,16 +27,12 @@ class camera extends THREE.PerspectiveCamera {
     this.rotation.set(-(Math.PI / 2), 0, this.rotation.z)
   }
 
-  setPosition(x: number, y: number, z: number) {
-    this.position.set(x, y, z)
-  }
-
   getLookAtVector() {
     console.log(this.quaternion)
     return new THREE.Vector3(0, 0, -1).applyQuaternion(this.quaternion)
   }
 
-  move(axis2D: THREE.Vector2, speed = this.moveSpeed) {
+  move(axis2D: THREE.Vector2, speed = this.movementSpeed) {
     this.translateOnAxis(new THREE.Vector3(axis2D.x, 0, -axis2D.y), speed)
   }
 
@@ -53,7 +50,7 @@ class camera extends THREE.PerspectiveCamera {
     this.quaternion.setFromEuler(euler)
   }
 
-  panCamera(axis2D: THREE.Vector2, speed = this.moveSpeed) {
+  panCamera(axis2D: THREE.Vector2, speed = this.movementSpeed) {
     this.useForPanObj.position.set(
       this.position.x,
       this.position.y,
@@ -89,6 +86,11 @@ class camera extends THREE.PerspectiveCamera {
     console.log(result)
     return result
   }
+
+  updateOnResize(width: number, height: number) {
+    this.aspect = width / height
+    this.updateProjectionMatrix()
+  }
 }
 
-export default camera
+export default PCamera

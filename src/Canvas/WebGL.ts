@@ -1,9 +1,9 @@
 import { ExpoWebGLRenderingContext } from "expo-gl"
 import { THREE } from "expo-three"
-import Camera from "@Editor/Camera"
-import Renderer from "@Editor/Renderer"
-import Scene from "@Editor/Scene"
-
+import Camera from "@Canvas/Camera"
+import Renderer from "@Canvas/Renderer"
+import Scene from "./Scene"
+import PCamera from "./PCamera"
 export default class WebGl {
   width = 0
   height = 0
@@ -13,9 +13,9 @@ export default class WebGl {
   scene!: Scene
   jsonData: BlueprintJSON | undefined
 
-  public onGLContextCreate(gl: ExpoWebGLRenderingContext) {
+  public onGLContextCreate(gl: ExpoWebGLRenderingContext, customScene: Scene) {
     // THREE.Object3D.DefaultUp.set(0, 0, 1)
-    this.initScene()
+    this.initScene(customScene)
     this.initCamera(gl)
     this.initRenderer(gl)
     this.initObject()
@@ -24,8 +24,7 @@ export default class WebGl {
 
   public onWindowResize(width: number, height: number, scale: number) {
     if (this.camera === undefined) return
-    this.camera.aspect = width / height
-    this.camera.updateProjectionMatrix()
+    this.camera.updateOnResize(width, height)
     this.renderer.setSize(width * scale, height * scale, false)
   }
 
@@ -53,8 +52,8 @@ export default class WebGl {
   }
 
   private initCamera(gl: ExpoWebGLRenderingContext) {
-    const camera = new Camera(gl.drawingBufferWidth, gl.drawingBufferHeight)
-    this.camera = camera
+    // const camera = new Camera(gl.drawingBufferWidth, gl.drawingBufferHeight)
+    this.camera = new PCamera(gl.drawingBufferWidth, gl.drawingBufferHeight)
     this.camera.init()
   }
 
@@ -62,11 +61,10 @@ export default class WebGl {
     this.scene.genBasicObject(this.camera)
   }
 
-  private initScene() {
-    const scene = new Scene()
-    this.scene = scene
-    this.scene.createEnv()
-    this.scene.createHelper()
-    if (this.jsonData) this.scene.applyJSONData(this.jsonData)
+  private initScene(customScene: Scene) {
+    // const scene = new Scene()
+    this.scene = customScene
+    this.scene.init()
+    // if (this.jsonData) this.scene.applyJSONData(this.jsonData)
   }
 }

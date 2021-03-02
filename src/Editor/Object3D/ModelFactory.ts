@@ -74,9 +74,7 @@ export default class ModelFactory {
       model.scale.set(Scale.X * 0.1, Scale.Y * 0.1, Scale.Z * 0.1)
       // super.create()
       const helper = new THREE.BoxHelper(model, 0xffff00)
-      const group = new Model()
-      group.add(model)
-      group.name = data.Name
+      const group = new Model(model)
       // group.up.set(0, 0, 1)
 
       return group

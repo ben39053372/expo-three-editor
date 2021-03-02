@@ -4,7 +4,7 @@ import { ConvexGeometry } from "three/examples/jsm/geometries/ConvexGeometry.js"
 
 export default class Wall extends ObjectBase {
   constructor(parameters?: THREE.MeshPhysicalMaterialParameters) {
-    super(
+    super([
       new THREE.Mesh(
         new ConvexGeometry([
           new THREE.Vector3(0, 0, 0),
@@ -18,9 +18,17 @@ export default class Wall extends ObjectBase {
         ]),
         new THREE.MeshPhysicalMaterial(parameters || {})
       )
-    )
-    this.userData.name = "Wall"
+    ])
+    this.setUserData()
     console.log("wall ", this.visible, super.visible)
     const hole = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1))
+  }
+
+  setUserData() {
+    this.userData.name = "Wall"
+  }
+
+  update() {
+    this.rotation.y += 0.001
   }
 }

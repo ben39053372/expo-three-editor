@@ -4,16 +4,22 @@ import { GridHelper, Object3D, Vector3 } from "three"
 import Cursor from "./Object3D/Cursor"
 import ModelFactory from "./Object3D/ModelFactory"
 import Plane from "./Object3D/Plane"
+import Scene from "../Canvas/Scene"
 
-export default class Scene extends THREE.Scene {
+export default class MyScene extends Scene {
   objects: Array<Object3D | undefined> = []
   plane: Plane | undefined
 
-  createHelper() {
+  init() {
+    this.createHelper?.()
+    this.createEnv?.()
+  }
+
+  protected createHelper() {
     this.add(new GridHelper(100, 100), new THREE.AxesHelper(10))
   }
 
-  createEnv() {
+  protected createEnv() {
     this.background = new THREE.Color(0x777777)
     this.fog = new THREE.FogExp2(0xffffff, 0.00015)
 

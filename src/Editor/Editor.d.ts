@@ -1,4 +1,5 @@
 // main Blueprint JSON
+
 interface BlueprintJSON {
   IsMarinella: boolean
   JsonVersion: string

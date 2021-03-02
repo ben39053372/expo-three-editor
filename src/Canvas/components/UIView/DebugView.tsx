@@ -1,12 +1,12 @@
-import { DebugFont } from "@Components/Typography"
 import React from "react"
+import { DebugFont } from "@Components/Typography"
 import { View } from "react-native"
 import styles from "./style"
 import { THREE } from "expo-three"
 import { UIViewProps } from "."
 import useUpdate from "./useUpdate"
 import Loading from "@Components/Loading"
-import camera from "@Editor/Camera"
+import { Camera } from "@Editor/index"
 
 const round = (float: number) => {
   return float.toFixed(2)
@@ -52,7 +52,7 @@ const DebugView = (props: UIViewProps) => {
   )
 }
 
-const CameraInfoView = (props: { camera: camera }) => {
+const CameraInfoView = (props: { camera: Camera }) => {
   return (
     <View>
       <DebugFont>

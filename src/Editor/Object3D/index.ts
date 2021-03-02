@@ -1,9 +1,3 @@
-import Cursor from "./Cursor"
-import Plane from "./Plane"
-import Ball from "./Ball"
-
-module.exports = {
-  Cursor,
-  Plane,
-  Ball
-}
+export { default as Cursor } from "./Cursor"
+export { default as Plane } from "./Cursor"
+export { default as Ball } from "./Cursor"
