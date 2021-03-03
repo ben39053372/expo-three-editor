@@ -29,6 +29,8 @@ const Button = (props: ButtonProp) => {
         props.style
       ]}
       onPress={props.onPress}
+      underlayColor={theme.color?.success.main}
+      activeOpacity={0.9}
     >
       {props.children}
     </TouchableHighlight>

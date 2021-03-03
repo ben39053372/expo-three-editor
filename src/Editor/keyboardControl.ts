@@ -9,6 +9,7 @@ export default function keyboardControl(event: KeyboardEvent, webGL: WebGl) {
    * -X-----|-----+X
    *        |
    *       -Y
+   * event key ref: https://keycode.info/
    */
 
   if (event.key === "w") webGL.camera.move(new Vector2(0, 1))
@@ -22,4 +23,7 @@ export default function keyboardControl(event: KeyboardEvent, webGL: WebGl) {
     webGL.camera.rotateByAxis2D(new Vector2(-0.1, 0))
   if (event.key === "ArrowDown")
     webGL.camera.rotateByAxis2D(new Vector2(0, -0.1))
+  if (event.key === " ") {
+    console.log(webGL.scene.children)
+  }
 }

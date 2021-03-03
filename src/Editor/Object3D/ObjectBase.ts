@@ -1,23 +1,24 @@
 import { THREE } from "expo-three"
 
 abstract class ObjectBase extends THREE.Group {
-  constructor(mesh?: THREE.Mesh[]) {
+  constructor(mesh?: THREE.Object3D[]) {
     super()
     this.name = "ObjectBase"
     if (mesh) this.add(...mesh)
     this.traverse((obj) => (obj.userData.isObject = true))
+    this.setUserData()
   }
 
   userData: {
     isObjectBase: boolean
-    [key: string]: number | string | boolean
+    [key: string]: any
   } = {
     isObjectBase: true
   }
 
   abstract setUserData(): void
 
-  add(...object: THREE.Mesh[]) {
+  add(...object: THREE.Object3D[]) {
     console.log("super", this.visible, super.visible)
     object.forEach((obj, i) => {
       console.log(i, obj)

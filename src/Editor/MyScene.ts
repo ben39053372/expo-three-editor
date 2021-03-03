@@ -7,12 +7,10 @@ import Plane from "./Object3D/Plane"
 import Scene from "../Canvas/Scene"
 
 export default class MyScene extends Scene {
-  objects: Array<Object3D | undefined> = []
-  plane: Plane | undefined
-
-  init() {
+  init(json?: BlueprintJSON) {
     this.createHelper?.()
     this.createEnv?.()
+    this.applyJSONData(json)
   }
 
   protected createHelper() {
@@ -46,7 +44,8 @@ export default class MyScene extends Scene {
     this.add(this.plane)
   }
 
-  async applyJSONData(json: BlueprintJSON) {
+  async applyJSONData(json?: BlueprintJSON) {
+    if (!json) return
     console.log(this)
     console.log(json)
     const allFurniture = json.Save_Furniture.filter(

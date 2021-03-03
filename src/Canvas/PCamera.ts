@@ -77,13 +77,12 @@ class PCamera extends THREE.PerspectiveCamera implements Camera {
 
   getIntersectObject(object: THREE.Object3D) {
     const result = this.raycaster.intersectObject(object)
-    // console.log({ result })
     return result
   }
 
   getIntersectObjects(objects: THREE.Object3D[]) {
     const result = this.raycaster.intersectObjects(objects, true)
-    console.log(result)
+    console.log(result.map((res) => res.object.parent)[0])
     return result
   }
 

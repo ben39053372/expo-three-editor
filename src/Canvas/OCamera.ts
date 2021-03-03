@@ -4,20 +4,21 @@ import { THREE } from "expo-three"
 class OCamera extends THREE.OrthographicCamera implements Camera {
   raycaster = new THREE.Raycaster()
 
-  movementSpeed = 1
+  movementSpeed = 2
   rotateSpeed = 0.4
   useForPanObj = new THREE.Object3D()
 
   init() {
-    this.up.set(0, 1, 0)
-    this.position.set(0, 0, 0)
+    this.position.set(0, 10, 0)
     this.lookAt(0, 0, 0)
   }
 
   getLookAtVector() {}
 
   move(axis2D: THREE.Vector2, speed = this.movementSpeed) {
-    this.translateOnAxis(new THREE.Vector3(axis2D.x, 0, -axis2D.y), speed)
+    this.position.add(
+      new THREE.Vector3(axis2D.x, 0, -axis2D.y).multiplyScalar(speed)
+    )
   }
 
   rotateByAxis2D() {}

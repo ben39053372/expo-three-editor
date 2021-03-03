@@ -6,6 +6,8 @@ import useWindowResize from "./Hooks/useWindowResize"
 import { GestureView } from "./components"
 import { ExpoWebGLRenderingContext, GLView } from "expo-gl"
 import MyScene from "@Editor/MyScene"
+import FPSStats from "react-fps-stats"
+import { Platform } from "react-native"
 
 export const webGLInstance = new WebGL()
 
@@ -31,12 +33,15 @@ const Canvas = (props: CanvasProps) => {
   return (
     <UIView webGL={webGL}>
       <GestureView webGL={webGL}>
-        <GLView
-          style={{ flex: 1 }}
-          onContextCreate={(gl: ExpoWebGLRenderingContext) => {
-            webGL.onGLContextCreate(gl, scene)
-          }}
-        />
+        <>
+          {Platform.OS === "web" && <FPSStats />}
+          <GLView
+            style={{ flex: 1 }}
+            onContextCreate={(gl: ExpoWebGLRenderingContext) => {
+              webGL.onGLContextCreate(gl, scene)
+            }}
+          />
+        </>
       </GestureView>
     </UIView>
   )

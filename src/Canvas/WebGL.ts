@@ -3,7 +3,8 @@ import { THREE } from "expo-three"
 import Camera from "@Canvas/Camera"
 import Renderer from "@Canvas/Renderer"
 import Scene from "./Scene"
-import PCamera from "./PCamera"
+import CombinedCamera from "./CombineCamera"
+
 export default class WebGl {
   width = 0
   height = 0
@@ -12,6 +13,7 @@ export default class WebGl {
   camera!: Camera
   scene!: Scene
   jsonData: BlueprintJSON | undefined
+  combinedCamera!: CombinedCamera
 
   public onGLContextCreate(gl: ExpoWebGLRenderingContext, customScene: Scene) {
     // THREE.Object3D.DefaultUp.set(0, 0, 1)
@@ -51,9 +53,20 @@ export default class WebGl {
     this.renderer = renderer
   }
 
+  changeToOCamera() {
+    this.combinedCamera.changeToOCamera()
+    this.camera = this.combinedCamera.camera
+    this.camera.init()
+  }
+
+  changeToPCamera() {
+    this.combinedCamera.changeToPCamera()
+    this.camera = this.combinedCamera.camera
+  }
+
   private initCamera(gl: ExpoWebGLRenderingContext) {
-    // const camera = new Camera(gl.drawingBufferWidth, gl.drawingBufferHeight)
-    this.camera = new PCamera(gl.drawingBufferWidth, gl.drawingBufferHeight)
+    this.combinedCamera = new CombinedCamera(gl)
+    this.camera = this.combinedCamera.camera
     this.camera.init()
   }
 
@@ -64,7 +77,6 @@ export default class WebGl {
   private initScene(customScene: Scene) {
     // const scene = new Scene()
     this.scene = customScene
-    this.scene.init()
-    // if (this.jsonData) this.scene.applyJSONData(this.jsonData)
+    this.scene.init(this.jsonData)
   }
 }

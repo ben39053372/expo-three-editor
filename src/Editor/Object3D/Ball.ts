@@ -7,11 +7,19 @@ export default class Ball extends ObjectBase {
     size: number = 1.5,
     parameters?: THREE.MeshPhysicalMaterialParameters
   ) {
-    super(
+    super([
       new Mesh(
         new THREE.SphereBufferGeometry(size, 32, 32),
         new THREE.MeshPhysicalMaterial(parameters || {})
       )
-    )
+    ])
+  }
+
+  setUserData() {
+    console.log(this.userData)
+  }
+
+  update() {
+    console.log("I am updating", this.name)
   }
 }

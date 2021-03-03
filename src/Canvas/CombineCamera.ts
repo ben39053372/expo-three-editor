@@ -1,15 +1,23 @@
+import { ExpoWebGLRenderingContext } from "expo-gl"
 import OCamera from "./OCamera"
 import PCamera from "./PCamera"
 
-class CombineCamera {
+class CombinedCamera {
   camera: PCamera | OCamera
   PCamera: PCamera
   OCamera: OCamera
 
-  constructor(pCamera: PCamera, oCamera: OCamera) {
-    this.camera = pCamera
-    this.PCamera = pCamera
-    this.OCamera = oCamera
+  constructor(gl: ExpoWebGLRenderingContext) {
+    this.PCamera = new PCamera(gl.drawingBufferWidth, gl.drawingBufferHeight)
+    this.OCamera = new OCamera(
+      gl.drawingBufferWidth / -10,
+      gl.drawingBufferWidth / 10,
+      gl.drawingBufferHeight / 10,
+      gl.drawingBufferHeight / -10,
+      0.1,
+      10000
+    )
+    this.camera = this.PCamera
   }
 
   changeToPCamera() {
@@ -17,8 +25,8 @@ class CombineCamera {
   }
 
   changeToOCamera() {
-    this.camera = this.PCamera
+    this.camera = this.OCamera
   }
 }
 
-export default CombineCamera
+export default CombinedCamera
