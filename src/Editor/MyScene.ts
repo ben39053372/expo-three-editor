@@ -5,6 +5,7 @@ import Cursor from "./Object3D/Cursor"
 import ModelFactory from "./Object3D/ModelFactory"
 import Plane from "./Object3D/Plane"
 import Scene from "../Canvas/Scene"
+import { PointLight } from "./Object3D"
 
 export default class MyScene extends Scene {
   init(json?: BlueprintJSON) {
@@ -39,9 +40,11 @@ export default class MyScene extends Scene {
 
     const cursor = new Cursor(camera, this.plane)
 
+    const pLight = new PointLight()
+
     this.objects.push(cursor, this.plane)
     if (Platform.OS === "web") this.add(cursor)
-    this.add(this.plane)
+    this.add(this.plane, pLight)
   }
 
   async applyJSONData(json?: BlueprintJSON) {
