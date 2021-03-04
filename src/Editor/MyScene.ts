@@ -22,7 +22,7 @@ export default class MyScene extends Scene {
     this.background = new THREE.Color(0x777777)
     this.fog = new THREE.FogExp2(0xffffff, 0.00015)
 
-    const ambientLight = new THREE.AmbientLight(0xffffff)
+    const ambientLight = new THREE.AmbientLight(0x404040)
     ambientLight.name = "ambientLight"
     this.add(ambientLight)
 

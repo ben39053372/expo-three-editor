@@ -19,5 +19,6 @@ export default class Ball extends ObjectBase {
     console.log(this.userData)
   }
 
+  // eslint-disable-next-line class-methods-use-this
   update() {}
 }

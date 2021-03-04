@@ -10,5 +10,6 @@ export default class Model extends ObjectBase {
     this.userData.name = "Model"
   }
 
+  // eslint-disable-next-line class-methods-use-this
   update() {}
 }
