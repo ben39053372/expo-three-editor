@@ -1,10 +1,9 @@
 import { Plane } from "@Editor/index"
 import { THREE } from "expo-three"
-import { Object3D } from "three"
 import Camera from "./Camera"
 
 abstract class Scene extends THREE.Scene {
-  objects: Array<Object3D | undefined> = []
+  objects: Array<THREE.Object3D | undefined> = []
 
   plane: Plane | undefined
 

@@ -1,6 +1,5 @@
 import { THREE } from "expo-three"
 import { Platform } from "react-native"
-import { GridHelper, Object3D, Vector3 } from "three"
 import Cursor from "./Object3D/Cursor"
 import ModelFactory from "./Object3D/ModelFactory"
 import Plane from "./Object3D/Plane"
@@ -15,7 +14,7 @@ export default class MyScene extends Scene {
   }
 
   protected createHelper() {
-    this.add(new GridHelper(100, 100), new THREE.AxesHelper(10))
+    this.add(new THREE.GridHelper(100, 100), new THREE.AxesHelper(10))
   }
 
   protected createEnv() {
