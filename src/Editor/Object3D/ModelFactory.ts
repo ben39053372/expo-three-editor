@@ -35,6 +35,7 @@ class ModelFactory {
         modelJSON,
         isObjectBase: true
       }
+      model.name = data.Name
 
       const { Position, Angle, Scale } = data.m_Tranform
 

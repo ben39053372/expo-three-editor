@@ -79,7 +79,7 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
   // #endregion
 
   constructor() {
-    super([new THREE.PointLight()])
+    super([new THREE.PointLight(new THREE.Color(0xf8ece0))])
     this.add(new THREE.PointLightHelper(this.light))
     this.position.set(10, 0, 10)
   }

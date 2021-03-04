@@ -54,12 +54,9 @@ export default class MyScene extends Scene {
       (f) => !["9000", "9002", "9003"].includes(f.ID.toString())
     )
     const modelFactory = new ModelFactory()
-    const furnitures = allFurniture.map(async (furniture) => {
+    allFurniture.forEach(async (furniture) => {
       const loadedModel = await modelFactory.create(furniture)
       if (loadedModel) this.add(loadedModel)
-      return loadedModel
     })
-    // furnitures.forEach((f) => f.create())
-    console.log("All model: ", furnitures)
   }
 }

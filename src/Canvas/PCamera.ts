@@ -68,7 +68,6 @@ class PCamera extends THREE.PerspectiveCamera implements Camera {
       this.position.y,
       this.useForPanObj.position.z
     )
-    // this.translateOnAxis(axis3D, speed)
   }
 
   shootRaycaster(coords: { x: number; y: number }) {
@@ -84,8 +83,6 @@ class PCamera extends THREE.PerspectiveCamera implements Camera {
     const result = this.raycaster.intersectObjects(objects, true)
     const target = result.map((res) => res.object.parent)[0]
     console.log(target)
-    target?.traverse((obj) => console.log(obj))
-
     return result
   }
 
