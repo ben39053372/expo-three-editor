@@ -2,6 +2,8 @@ import ObjectBase from "./ObjectBase"
 import { THREE } from "expo-three"
 
 export default class PointLight extends ObjectBase implements THREE.PointLight {
+  // #region getter setter
+
   get light() {
     return this.children[0] as THREE.PointLight
   }
@@ -74,8 +76,12 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
     return this.light.shadowMapHeight
   }
 
+  // #endregion
+
   constructor() {
     super([new THREE.PointLight()])
+    this.add(new THREE.PointLightHelper(this.light))
+    this.position.set(10, 0, 10)
   }
 
   setUserData(): void {
@@ -83,6 +89,7 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
   }
 
   update(): void {
-    console.log("update", this)
+    this.translateX(1)
+    this.lookAt(0, 0, 0)
   }
 }

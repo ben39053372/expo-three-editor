@@ -19,7 +19,5 @@ export default class Ball extends ObjectBase {
     console.log(this.userData)
   }
 
-  update() {
-    console.log("I am updating", this.name)
-  }
+  update() {}
 }

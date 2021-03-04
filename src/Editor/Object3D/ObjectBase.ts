@@ -19,15 +19,6 @@ abstract class ObjectBase extends THREE.Group {
 
   abstract setUserData(): void
 
-  add(...object: THREE.Object3D[]) {
-    console.log("super", this.visible, super.visible)
-    object.forEach((obj, i) => {
-      console.log(i, obj)
-      obj.userData.isObject = true
-    })
-    return super.add(...object)
-  }
-
   setVisible(visible: boolean) {
     console.log("use func to set visible")
     this.visible = visible

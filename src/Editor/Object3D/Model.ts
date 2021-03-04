@@ -10,8 +10,5 @@ export default class Model extends ObjectBase {
     this.userData.name = "Model"
   }
 
-  update() {
-    this.rotation.y += 0.02
-    console.log("update")
-  }
+  update() {}
 }
