@@ -4,6 +4,7 @@ import Camera from "@Canvas/Camera"
 import Renderer from "@Canvas/Renderer"
 import Scene from "./Scene"
 import CombinedCamera from "./CombineCamera"
+import { ObjectBase } from "@Editor/index"
 
 export default class WebGl {
   width = 0
@@ -33,6 +34,7 @@ export default class WebGl {
   public start() {
     const render = () => {
       this.timeout = requestAnimationFrame(render)
+      this.scene.traverseVisible((obj) => (obj as ObjectBase)?.update?.())
       this.renderer.render(this.scene, this.camera)
       this.renderer.__gl.endFrameEXP()
     }
