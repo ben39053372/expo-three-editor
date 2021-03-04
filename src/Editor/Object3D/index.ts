@@ -1,3 +1,8 @@
 export { default as Cursor } from "./Cursor"
 export { default as Plane } from "./Plane"
 export { default as Ball } from "./Ball"
+export { default as PointLight } from "./PointLight"
+export { default as Wall } from "./Wall"
+export { default as ObjectBase } from "./ObjectBase"
+export { default as Model } from "./Model"
+export { default as ModelFactory } from "./ModelFactory"
