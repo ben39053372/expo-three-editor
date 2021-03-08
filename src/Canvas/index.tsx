@@ -33,13 +33,13 @@ const Canvas = (props: CanvasProps) => {
   return (
     <UIView webGL={webGL}>
       <GestureView webGL={webGL}>
-        {Platform.OS === "web" && <FPSStats top={50} />}
+        {/* {Platform.OS === "web" && <FPSStats top={50} />}
         <GLView
           style={{ flex: 1 }}
           onContextCreate={(gl: ExpoWebGLRenderingContext) => {
             webGL.onGLContextCreate(gl, scene)
           }}
-        />
+        /> */}
       </GestureView>
     </UIView>
   )
