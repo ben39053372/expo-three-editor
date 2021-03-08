@@ -4,11 +4,11 @@ import Typography from "@Components/Typography"
 import Ball from "@Editor/Object3D/Ball"
 import Wall from "@Editor/Object3D/Wall"
 import font from "@Style/font"
-import { padding } from "@Style/spacing"
+import { padding, margin } from "@Style/spacing"
 import { ThemeContext } from "@Theme/index"
 import React, { useContext } from "react"
 import { useTranslation } from "react-i18next"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { actionStyle } from "./style"
 import { THREE } from "expo-three"
 
@@ -51,16 +51,16 @@ export default function ActionView(props: ActionViewProps) {
         { backgroundColor: theme.color?.primary.main }
       ]}
     >
-      <Button onPress={addBall} color="secondary">
+      <Button onPress={addBall} color="secondary" style={[margin.xs]}>
         <Typography style={font.body}>{t("add a ball")}</Typography>
       </Button>
-      <Button onPress={addWall} color="secondary">
+      <Button onPress={addWall} color="secondary" style={[margin.xs]}>
         <Typography style={font.body}>{t("add a Wall")}</Typography>
       </Button>
-      <Button onPress={changeOCamera} color="info">
+      <Button onPress={changeOCamera} color="info" style={[margin.xs]}>
         <Typography>{t("change to OCamera")}</Typography>
       </Button>
-      <Button onPress={changePCamera} color="info">
+      <Button onPress={changePCamera} color="info" style={[margin.xs]}>
         <Typography>{t("change to PCamera")}</Typography>
       </Button>
     </View>

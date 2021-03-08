@@ -53,7 +53,7 @@ class ModelFactory {
 
       return model
     } catch (error) {
-      console.error(error)
+      console.warn(error)
     }
   }
 }
