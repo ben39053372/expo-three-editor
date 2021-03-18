@@ -10,6 +10,9 @@ import themes from "./theme/themes"
 
 import JSONDATA from "./blueprint.json"
 
+import { THREE } from "expo-three"
+THREE.suppressMetroWarnings(true)
+
 export default function App() {
   return (
     <ReduxProvider store={store}>

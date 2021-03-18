@@ -39,10 +39,6 @@ export default function ActionView(props: ActionViewProps) {
     props.webGL.scene.add(wall)
   }
 
-  const changePCamera = () => props.webGL.changeToPCamera()
-
-  const changeOCamera = () => props.webGL.changeToOCamera()
-
   return (
     <View
       style={[
@@ -57,10 +53,18 @@ export default function ActionView(props: ActionViewProps) {
       <Button onPress={addWall} color="secondary" style={[margin.xs]}>
         <Typography style={font.body}>{t("add a Wall")}</Typography>
       </Button>
-      <Button onPress={changeOCamera} color="info" style={[margin.xs]}>
+      <Button
+        onPress={props.webGL.changeToPCamera}
+        color="info"
+        style={[margin.xs]}
+      >
         <Typography>{t("change to OCamera")}</Typography>
       </Button>
-      <Button onPress={changePCamera} color="info" style={[margin.xs]}>
+      <Button
+        onPress={props.webGL.changeToOCamera}
+        color="info"
+        style={[margin.xs]}
+      >
         <Typography>{t("change to PCamera")}</Typography>
       </Button>
     </View>
