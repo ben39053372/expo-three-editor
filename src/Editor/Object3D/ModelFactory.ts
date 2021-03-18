@@ -61,33 +61,38 @@ class ModelFactory {
 function applyMaterial(model: Model, modelJSON: ModelJSON) {
   let materialId = 0
   model.traverse(async (obj) => {
-    if (obj instanceof THREE.Mesh) {
-      if (!modelJSON.files.materialStyles[0].materials[materialId]) return
-      const images =
-        modelJSON.files.materialStyles[0].materials[materialId].images
-      obj.material = new THREE.MeshStandardMaterial({
-        map: images.albedo[SIZE]
-          ? await ExpoTHREE.loadAsync(images.albedo[SIZE]).catch((err) => {
-              throw new Error(obj.name + err)
-            })
-          : null,
-        aoMap: images.ambient[SIZE]
-          ? await ExpoTHREE.loadAsync(images.ambient[SIZE]).catch((err) => {
-              throw new Error(obj.name + err)
-            })
-          : null,
-        normalMap: images.normal[SIZE]
-          ? await ExpoTHREE.loadAsync(images.normal[SIZE]).catch((err) => {
-              throw new Error(obj.name + err)
-            })
-          : null,
-        metalnessMap: images.metallic[SIZE]
-          ? await ExpoTHREE.loadAsync(images.metallic[SIZE]).catch((err) => {
-              throw new Error(obj.name + err)
-            })
-          : null
-      })
-      materialId += 1
+    try {
+      if (obj instanceof THREE.Mesh) {
+        if (!modelJSON.files.materialStyles[0].materials[materialId]) return
+        const images =
+          modelJSON.files.materialStyles[0].materials[materialId].images
+        obj.material = new THREE.MeshStandardMaterial({
+          map: images.albedo[SIZE]
+            ? await ExpoTHREE.loadAsync(images.albedo[SIZE]).catch((err) => {
+                throw new Error(obj.name + err)
+              })
+            : null,
+          aoMap: images.ambient[SIZE]
+            ? await ExpoTHREE.loadAsync(images.ambient[SIZE]).catch((err) => {
+                throw new Error(obj.name + err)
+              })
+            : null,
+          normalMap: images.normal[SIZE]
+            ? await ExpoTHREE.loadAsync(images.normal[SIZE]).catch((err) => {
+                throw new Error(obj.name + err)
+              })
+            : null,
+          // normalScale: new THREE.Vector2(0.1, 0.1),
+          metalnessMap: images.metallic[SIZE]
+            ? await ExpoTHREE.loadAsync(images.metallic[SIZE]).catch((err) => {
+                throw new Error(obj.name + err)
+              })
+            : null
+        })
+        materialId += 1
+      }
+    } catch (err) {
+      console.error(err)
     }
   })
 }

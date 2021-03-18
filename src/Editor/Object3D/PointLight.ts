@@ -8,6 +8,10 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
     return this.children[0] as THREE.PointLight
   }
 
+  get helper() {
+    return this.children[1] as THREE.PointLightHelper
+  }
+
   get intensity() {
     return this.light.intensity
   }
@@ -80,8 +84,14 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
 
   constructor() {
     super([new THREE.PointLight(new THREE.Color(0xf8ece0))])
-    this.add(new THREE.PointLightHelper(this.light))
-    this.position.set(10, 0, 10)
+    this.attach(new THREE.PointLightHelper(this.light, 3, 0xffff00))
+    this.position.set(10, 10, 10)
+    this.light.power = 650
+    this.light.decay = 1.4
+    this.light.castShadow = true
+    this.light.shadow.mapSize.width = 1500
+    this.light.shadow.mapSize.height = 1500
+    this.light.shadow.bias = 0.0009
   }
 
   setUserData(): void {
@@ -89,7 +99,7 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
   }
 
   update(): void {
-    this.translateX(1)
+    // this.translateX(0.5)
     this.lookAt(0, 0, 0)
   }
 }
