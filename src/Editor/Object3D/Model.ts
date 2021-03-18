@@ -8,6 +8,11 @@ export default class Model extends ObjectBase {
       ...this.userData,
       ...userData
     }
+    this.castShadow = true
+    this.traverse((children) => {
+      children.receiveShadow = true
+      children.castShadow = true
+    })
   }
 
   setUserData() {

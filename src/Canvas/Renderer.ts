@@ -15,6 +15,9 @@ class EditorRenderer extends Renderer {
   constructor(props: RendererProps) {
     super(props)
     this.__gl = props.gl
+    this.physicallyCorrectLights = true
+    this.shadowMap.enabled = true
+    this.shadowMap.type = THREE.PCFSoftShadowMap
   }
 }
 

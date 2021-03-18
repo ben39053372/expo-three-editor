@@ -5,11 +5,11 @@ class Plane extends THREE.Mesh {
       999999999999999,
       999999999999999
     )
-    const material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshPhongMaterial({
       // color: 0xff99ff,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0
+      opacity: 1
     })
     super(geometry, material)
     this.init()
@@ -18,6 +18,7 @@ class Plane extends THREE.Mesh {
   private init() {
     this.name = "plane"
     this.rotateX(Math.PI / 2)
+    this.receiveShadow = true
   }
 }
 

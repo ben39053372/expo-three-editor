@@ -18,15 +18,18 @@ export default class MyScene extends Scene {
   }
 
   protected createEnv() {
-    this.background = new THREE.Color(0x777777)
-    this.fog = new THREE.FogExp2(0xffffff, 0.00015)
+    this.background = new THREE.Color(0xffffff)
+    // this.fog = new THREE.FogExp2(0xffff77, 0.005)
 
-    const ambientLight = new THREE.AmbientLight(0x404040)
+    const ambientLight = new THREE.AmbientLight(0xfffff0)
+    // ambientLight.intensity = 0.5
     ambientLight.name = "ambientLight"
     this.add(ambientLight)
 
-    const dl = new THREE.DirectionalLight(0xffffff)
+    const dl = new THREE.DirectionalLight(0xfffff0, 1)
     dl.position.set(100, 100, 100)
+    dl.castShadow = true
+    dl.shadow.bias = 0.0002
     dl.lookAt(this.position)
     this.add(dl)
 
