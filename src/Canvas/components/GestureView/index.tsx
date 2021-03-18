@@ -63,6 +63,8 @@ const GestureView = (props: props) => {
           intersects = props.webGL.camera.getIntersectObjects(
             props.webGL.scene.children
           )
+          if (props.webGL.outlinePass)
+            props.webGL.outlinePass.selectedObjects = [intersects[0].object]
         }
       },
       // on Move
