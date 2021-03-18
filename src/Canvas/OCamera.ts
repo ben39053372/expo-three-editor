@@ -9,8 +9,9 @@ class OCamera extends THREE.OrthographicCamera implements Camera {
   useForPanObj = new THREE.Object3D()
 
   init() {
-    this.position.set(0, 10, 0)
+    this.position.set(0, 20, 0)
     this.lookAt(0, 0, 0)
+    this.zoom = 0.5
   }
 
   getLookAtVector() {}
@@ -25,7 +26,9 @@ class OCamera extends THREE.OrthographicCamera implements Camera {
 
   panCamera() {}
 
-  shootRaycaster() {}
+  shootRaycaster(coords: { x: number; y: number }) {
+    this.raycaster.setFromCamera(coords, this)
+  }
 
   getIntersectObject(object: THREE.Object3D) {
     const result = this.raycaster.intersectObject(object)
@@ -41,6 +44,13 @@ class OCamera extends THREE.OrthographicCamera implements Camera {
 
   updateOnResize() {
     this.updateProjectionMatrix()
+  }
+
+  translateZ(dis: number) {
+    console.log("zoom")
+    this.zoom += -dis / 10
+    this.updateProjectionMatrix()
+    return this
   }
 }
 
