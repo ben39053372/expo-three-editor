@@ -1,5 +1,6 @@
 import { THREE } from "expo-three"
 import Camera from "./Camera"
+import WebGL from "./WebGL"
 
 const minPolarAngle = 0
 const maxPolarAngle = Math.PI
@@ -11,6 +12,8 @@ class PCamera extends THREE.PerspectiveCamera implements Camera {
   useForPanObj = new THREE.Object3D()
 
   raycaster = new THREE.Raycaster()
+  lookAtRaycaster = new THREE.Raycaster()
+  cameraLookAt = new THREE.Vector3()
 
   constructor(width: number, height: number) {
     super(45, width / height, 1, 1000)
@@ -30,6 +33,17 @@ class PCamera extends THREE.PerspectiveCamera implements Camera {
   getLookAtVector() {
     console.log(this.quaternion)
     return new THREE.Vector3(0, 0, -1).applyQuaternion(this.quaternion)
+  }
+
+  updateLookAt(webGL: WebGL) {
+    this.lookAtRaycaster.setFromCamera({ x: 0, y: 0 }, this)
+    if (webGL.scene.plane) {
+      const plane = this.lookAtRaycaster.intersectObject(webGL.scene.plane)[0]
+      if (plane) {
+        this.cameraLookAt = plane.point
+      }
+    }
+    console.log(this.cameraLookAt)
   }
 
   move(axis2D: THREE.Vector2, speed = this.movementSpeed) {

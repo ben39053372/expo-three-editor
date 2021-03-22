@@ -1,20 +1,30 @@
 import Camera from "./Camera"
 import { THREE } from "expo-three"
+import WebGL from "./WebGL"
 
 class OCamera extends THREE.OrthographicCamera implements Camera {
   raycaster = new THREE.Raycaster()
+  lookAtRaycaster = new THREE.Raycaster()
+  cameraLookAt = new THREE.Vector3()
 
   movementSpeed = 2
   rotateSpeed = 0.4
   useForPanObj = new THREE.Object3D()
 
   init() {
-    this.position.set(0, 20, 0)
+    this.position.set(0, 50, 0)
     this.lookAt(0, 0, 0)
     this.zoom = 0.5
   }
 
-  getLookAtVector() {}
+  updateLookAt(webGL: WebGL) {
+    this.lookAtRaycaster.setFromCamera({ x: 0, y: 0 }, this)
+    if (webGL.scene.plane)
+      this.cameraLookAt = this.lookAtRaycaster.intersectObject(
+        webGL.scene.plane
+      )[0].point
+    console.log(this.cameraLookAt)
+  }
 
   move(axis2D: THREE.Vector2, speed = this.movementSpeed) {
     this.position.add(
