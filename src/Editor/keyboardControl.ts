@@ -1,5 +1,6 @@
 import WebGl from "@Canvas/WebGL"
 import { THREE } from "expo-three"
+import { Ball } from "./Object3D"
 
 export default function keyboardControl(event: KeyboardEvent, webGL: WebGl) {
   /**
@@ -26,5 +27,7 @@ export default function keyboardControl(event: KeyboardEvent, webGL: WebGl) {
     webGL.camera.rotateByAxis2D(new THREE.Vector2(0, -0.1))
   if (event.key === " ") {
     console.log(webGL.scene.children)
+    console.log(webGL.camera.updateLookAt(webGL))
+    console.log(webGL.camera.cameraLookAt)
   }
 }

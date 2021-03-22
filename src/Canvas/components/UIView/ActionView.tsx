@@ -8,7 +8,7 @@ import { padding, margin } from "@Style/spacing"
 import { ThemeContext } from "@Theme/index"
 import React, { useContext } from "react"
 import { useTranslation } from "react-i18next"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 import { actionStyle } from "./style"
 import { THREE } from "expo-three"
 
@@ -54,14 +54,14 @@ export default function ActionView(props: ActionViewProps) {
         <Typography style={font.body}>{t("add a Wall")}</Typography>
       </Button>
       <Button
-        onPress={props.webGL.changeToPCamera}
+        onPress={() => props.webGL.changeToOCamera()}
         color="info"
         style={[margin.xs]}
       >
         <Typography>{t("change to OCamera")}</Typography>
       </Button>
       <Button
-        onPress={props.webGL.changeToOCamera}
+        onPress={() => props.webGL.changeToPCamera()}
         color="info"
         style={[margin.xs]}
       >

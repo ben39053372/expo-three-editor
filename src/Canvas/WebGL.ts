@@ -7,35 +7,39 @@ import CombinedCamera from "./CombineCamera"
 import { Dimensions } from "react-native"
 import { ObjectBase } from "@Editor/index"
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
-import { SSAOPass } from "three/examples/jsm/postprocessing/SSAOPass.js"
 import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js"
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js"
-import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js"
-import { SSAARenderPass } from "three/examples/jsm/postprocessing/SSAARenderPass.js"
-import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass"
+
+import {
+  createFXAAPass,
+  createOutlinePass,
+  createRenderPass,
+  createSMAAPass,
+  createSSAAPass
+} from "./postProcessing"
 
 export default class WebGl {
   width = 0
   height = 0
   timeout = 0
+  boundary: number = 9999
   renderer!: Renderer
-  private _camera!: Camera
   scene!: Scene
   jsonData: BlueprintJSON | undefined
   combinedCamera!: CombinedCamera
   composer: EffectComposer | undefined
-  get outlinePass() {
-    return this.composer?.passes.find((p) => p instanceof OutlinePass) as
-      | OutlinePass
-      | undefined
-  }
+  private _camera!: Camera
+  outlinePass: OutlinePass = null!
+  isUsePostProcessing: boolean = true
 
   // #region getter setter
+
   get camera() {
     return this._camera
   }
 
+  /**
+   * reset pass when camera change
+   */
   set camera(camera: Camera) {
     this._camera = camera
     this.resetPasses()
@@ -50,7 +54,7 @@ export default class WebGl {
     this.initScene(customScene)
     this.initRenderer(gl)
     this.initCamera(gl)
-    this.initPostProcessing()
+    this.initComposer()
     this.initObject()
     this.start()
   }
@@ -66,19 +70,36 @@ export default class WebGl {
   public start() {
     const render = () => {
       this.timeout = requestAnimationFrame(render)
-      this.scene.traverseVisible((obj) => (obj as ObjectBase)?.update?.())
-      // this.composer?.render()
-      this.renderer.render(this.scene, this.camera)
+      this.update()
+      this.isUsePostProcessing
+        ? this.composer?.render()
+        : this.renderer.render(this.scene, this.camera)
 
       this.renderer.__gl.endFrameEXP()
     }
     render()
   }
 
+  public update() {
+    this.scene.traverseVisible((obj) => (obj as ObjectBase)?.update?.())
+    this.checkCameraBoundary()
+  }
+
   public pause() {
     cancelAnimationFrame(this.timeout)
     this.timeout = -1
     console.log(this.timeout)
+  }
+
+  private checkCameraBoundary() {
+    if (this.camera.position.x > this.boundary / 2)
+      this.camera.position.x = (this.boundary / 2) * 0.95
+    if (this.camera.position.x < -this.boundary / 2)
+      this.camera.position.x = (-this.boundary / 2) * 0.95
+    if (this.camera.position.y > this.boundary / 2)
+      this.camera.position.y = (this.boundary / 2) * 0.95
+    if (this.camera.position.y < -this.boundary / 2)
+      this.camera.position.y = (-this.boundary / 2) * 0.95
   }
 
   private initRenderer(gl: ExpoWebGLRenderingContext) {
@@ -104,39 +125,23 @@ export default class WebGl {
 
   resetPasses() {
     // render
-    const renderPass = new RenderPass(this.scene, this.camera)
-
-    // ssao
-    const ssaoPass = new SSAOPass(this.scene, this.camera)
-    ssaoPass.kernelRadius = 1
-
+    const renderPass = createRenderPass(this.scene, this.camera)
     // outline
-    const outlinePass = new OutlinePass(
-      new THREE.Vector2(this.width || 1920, this.height || 1080),
+    const outlinePass = createOutlinePass(
+      this.width,
+      this.height,
       this.scene,
-      this.camera,
-      []
+      this.camera
     )
-
+    this.outlinePass = outlinePass
     // FXAA
-    const fxaaPass = new ShaderPass(FXAAShader)
-    const pixelRatio = this.renderer.getPixelRatio()
-    fxaaPass.uniforms.resolution.value.set(
-      1 / (this.width * pixelRatio),
-      1 / (this.height * pixelRatio)
-    )
-    fxaaPass.material.uniforms.resolution.value.x =
-      1 / (this.width * pixelRatio)
-    fxaaPass.material.uniforms.resolution.value.y =
-      1 / (this.height * pixelRatio)
+    const fxaaPass = createFXAAPass(this.renderer, this.width, this.height)
+    // SSAA
+    const ssaa = createSSAAPass(this.scene, this.camera)
+    // SMAA
+    const smaa = createSMAAPass(this.width, this.height)
 
-    // msaa
-    const ssaa = new SSAARenderPass(this.scene, this.camera, 0xffffff, 0)
-    ssaa.sampleLevel = 4
-
-    const smaa = new SMAAPass(this.width, this.height)
-
-    const passes = [renderPass, ssaoPass, outlinePass, fxaaPass, smaa]
+    const passes = [renderPass, outlinePass, fxaaPass, smaa]
 
     passes.forEach((pass, i) => {
       this.composer?.removePass(this.composer.passes[i])
@@ -160,7 +165,7 @@ export default class WebGl {
     this.scene.init(this.jsonData)
   }
 
-  private initPostProcessing() {
+  private initComposer() {
     this.composer = new EffectComposer(this.renderer)
     this.composer.renderer.shadowMap.enabled = true
     this.resetPasses()

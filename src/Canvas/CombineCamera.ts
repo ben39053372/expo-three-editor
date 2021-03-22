@@ -15,7 +15,7 @@ class CombinedCamera {
       gl.drawingBufferHeight / 10,
       gl.drawingBufferHeight / -10,
       0.1,
-      10000
+      1000
     )
     this.camera = this.PCamera
   }
