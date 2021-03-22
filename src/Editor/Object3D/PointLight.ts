@@ -2,16 +2,11 @@ import ObjectBase from "./ObjectBase"
 import { THREE } from "expo-three"
 
 export default class PointLight extends ObjectBase implements THREE.PointLight {
+  light: THREE.PointLight = null!
+  helper: THREE.PointLightHelper = null!
+  _add: boolean = true
+
   // #region getter setter
-
-  get light() {
-    return this.children[0] as THREE.PointLight
-  }
-
-  get helper() {
-    return this.children[1] as THREE.PointLightHelper
-  }
-
   get intensity() {
     return this.light.intensity
   }
@@ -24,12 +19,20 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
     return this.light.decay
   }
 
+  set decay(d) {
+    this.light.decay = d
+  }
+
   get shadow() {
     return this.light.shadow
   }
 
   get power() {
     return this.light.power
+  }
+
+  set power(p) {
+    this.light.power = p
   }
 
   get color() {
@@ -83,23 +86,38 @@ export default class PointLight extends ObjectBase implements THREE.PointLight {
   // #endregion
 
   constructor() {
-    super([new THREE.PointLight(new THREE.Color(0xf8ece0))])
-    this.attach(new THREE.PointLightHelper(this.light, 3, 0xffff00))
-    this.position.set(10, 10, 10)
+    super()
+    this.light = new THREE.PointLight(new THREE.Color(0xf8ece0))
+    this.helper = new THREE.PointLightHelper(this.light, 3, 0xffff00)
+    this.add(this.light, this.helper)
+    this.init()
+  }
+
+  // #region implement
+  init() {
+    this.light.position.set(10, 30, 10)
     this.light.power = 650
     this.light.decay = 1.4
     this.light.castShadow = true
-    this.light.shadow.mapSize.width = 1500
-    this.light.shadow.mapSize.height = 1500
-    this.light.shadow.bias = 0.0009
+    this.light.shadow.mapSize = new THREE.Vector2(500, 500)
+    this.light.shadow.bias = 0.00003
+    this.light.shadow.normalBias = 0.00001
   }
 
   setUserData(): void {
-    this.userData.myType = "PointLight"
+    this.name = "pointLight"
   }
 
   update(): void {
     // this.translateX(0.5)
     this.lookAt(0, 0, 0)
+    if (this._add) {
+      this.decay += 0.001
+      if (this.decay > 1.4) this._add = false
+    } else {
+      this.decay -= 0.002
+      if (this.decay < 1) this._add = true
+    }
   }
+  // #endregion
 }

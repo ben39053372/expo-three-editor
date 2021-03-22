@@ -1,15 +1,9 @@
 import { THREE } from "expo-three"
 class Plane extends THREE.Mesh {
   constructor() {
-    const geometry = new THREE.PlaneBufferGeometry(
-      999999999999999,
-      999999999999999
-    )
+    const geometry = new THREE.PlaneBufferGeometry(9999, 9999)
     const material = new THREE.MeshPhongMaterial({
-      // color: 0xff99ff,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 1
+      color: "#fff"
     })
     super(geometry, material)
     this.init()
@@ -17,7 +11,8 @@ class Plane extends THREE.Mesh {
 
   private init() {
     this.name = "plane"
-    this.rotateX(Math.PI / 2)
+    this.rotateX(-Math.PI / 2)
+    this.position.y = -0.1
     this.receiveShadow = true
   }
 }
