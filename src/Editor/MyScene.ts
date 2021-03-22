@@ -5,10 +5,11 @@ import ModelFactory from "./Object3D/ModelFactory"
 import Plane from "./Object3D/Plane"
 import Scene from "../Canvas/Scene"
 import { PointLight } from "./Object3D"
+import DirectionalLight from "./Object3D/DirectionalLight"
 
 export default class MyScene extends Scene {
   init(json?: BlueprintJSON) {
-    this.createHelper?.()
+    // this.createHelper?.()
     this.createEnv?.()
     this.applyJSONData(json)
   }
@@ -18,23 +19,14 @@ export default class MyScene extends Scene {
   }
 
   protected createEnv() {
-    this.background = new THREE.Color(0xffffff)
+    this.background = new THREE.Color(0xffffaf)
     // this.fog = new THREE.FogExp2(0xffff77, 0.005)
 
-    const ambientLight = new THREE.AmbientLight(0xfffff0)
-    // ambientLight.intensity = 0.5
+    const ambientLight = new THREE.AmbientLight(0xffffff)
     ambientLight.name = "ambientLight"
     this.add(ambientLight)
 
-    const dl = new THREE.DirectionalLight(0xfffff0, 1)
-    dl.position.set(100, 100, 100)
-    dl.castShadow = true
-    dl.shadow.bias = 0.0002
-    dl.lookAt(this.position)
-    this.add(dl)
-
-    const dlHelper = new THREE.DirectionalLightHelper(dl)
-    this.add(dlHelper)
+    this.add(new DirectionalLight())
   }
 
   genBasicObject(camera: THREE.Camera) {
