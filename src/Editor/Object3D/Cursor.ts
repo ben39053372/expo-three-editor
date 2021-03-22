@@ -16,10 +16,9 @@ class Cursor extends THREE.Mesh {
     this.rayCaster = new THREE.Raycaster()
     this.camera = camera
     this.plane = plane
-    this.init()
   }
 
-  private init() {
+  init() {
     this.name = "cursor"
     this.rotateX(Math.PI)
   }
